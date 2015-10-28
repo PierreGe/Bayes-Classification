@@ -1,0 +1,127 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.5cm,top=2cm,right=2.5cm,nohead,nofoot]{geometry}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{hyperref}
+\usepackage{amssymb}
+
+\linespread{1.1}
+
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\textbf{\textsc{UNIVERSIT\'E DE MONTR\'EAL}}\\
+%\textbf{\textsc{Faculté des Sciences}}\\
+%\textbf{\textsc{Département d'Informatique}}
+\vfill{}\vfill{}
+\begin{center}{\Huge Rapport : Devoir1 }\end{center}{\Huge \par}
+\begin{center}{\large Pierre Gérard}\end{center}{\Huge \par}
+\vfill{}\vfill{} \vfill{}
+\begin{center}{\large \textbf{IFT3395-6390 Fondements de l'apprentissage machine}}\hfill{\\Pascal Vincent, Alexandre de Brébisson et César Laurent}\end{center}{\large\par}
+\vfill{}\vfill{}\enlargethispage{3cm}
+\textbf{Année académique 2015~-~2016}
+\end{center}
+\end{titlepage}
+
+%\begin{abstract}
+%Ce rapport présente ...
+%\end{abstract}
+
+
+\tableofcontents
+
+\pagebreak
+
+\section{Partie Théorique : Estimation de densité}
+
+\subsection{Densité avec des fenêtres de Parzen a noyau Gaussien isotropique}
+
+a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \frac{-1}{2} \frac{d(x^{i},x)^{2}}{\sigma^{2}} } $
+
+\todo{Paramètre h}
+
+b) Si on choisit de prendre tous les points du voisinages
+$ p(x) =  \frac{1}{n} \sum_{i=1}^{n} \frac{1}{smoothing^{d}} \mathcal{N}_{x^{(i)}, \sigma^{2}} $
+
+c) 
+
+Hyper-paramètre: $\sigma$
+
+Paramètre : On mémorise l'ensemble des données d'entrainement.
+On considère cette méthode comme non-paramétrique car le nombre de paramètre varie avec la taille de l'ensemble de données.
+
+\todo{Taille des paramètres}
+
+d)
+
+\subsection{Densité paramétrique avec Gaussienne isotropique}
+
+a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) }$
+
+
+$\mu$ est le est le vecteur des moyennes, de dimension d.
+$\Sigma$ est la matrice de covariance, de dimension 1.
+
+
+
+b) sigma devient un paramètre ?
+
+c)
+
+Paramètres :
+\begin{itemize}
+	\item $\mu$ est le est le vecteur des moyennes, de dimension d.
+	\item $\Sigma$ est la matrice de covariance, de dimension 1.
+\end{itemize}
+
+Pas d'hyper-paramètre.
+
+
+\subsection{Densité paramétrique avec Gaussienne diagonale}
+
+a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) }$
+\begin{itemize}
+	\item $\mu$ est le est le vecteur des moyennes, de dimension d.
+	\item $\Sigma$ est la matrice de covariance, de dimension d.
+\end{itemize}
+
+b) \todo{video larochelle covariance zero}
+
+c)
+
+d)
+
+
+\section{Partie Théorique : Classifieurs de Bayes}
+
+\subsection{Classifieur de Bayes obtenu avec des densités paramétriques Gaussiennes diagonales}
+
+a)
+
+b)
+
+c)
+
+\subsection{Classifieur de Bayes obtenu avec des fenêtres de Parzen à noyau Gaussien isotropique}
+
+a)
+
+b)
+
+
+\subsection{Classifieur de Bayes obtenu avec des fenêtres de Parzen à noyau Gaussien isotropique}
+
+a)
+
+b)
+
+
+
+\end{document}
