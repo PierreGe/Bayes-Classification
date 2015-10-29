@@ -8,6 +8,7 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{hyperref}
 \usepackage{amssymb}
+\usepackage{dsfont}
 
 \linespread{1.1}
 
@@ -22,7 +23,7 @@
 %\textbf{\textsc{Département d'Informatique}}
 \vfill{}\vfill{}
 \begin{center}{\Huge Rapport : Devoir1 }\end{center}{\Huge \par}
-\begin{center}{\large Pierre Gérard}\end{center}{\Huge \par}
+\begin{center}{\large Pierre Gérard \\ Mathieu Bouchard}\end{center}{\Huge \par}
 \vfill{}\vfill{} \vfill{}
 \begin{center}{\large \textbf{IFT3395-6390 Fondements de l'apprentissage machine}}\hfill{\\Pascal Vincent, Alexandre de Brébisson et César Laurent}\end{center}{\large\par}
 \vfill{}\vfill{}\enlargethispage{3cm}
@@ -45,25 +46,27 @@
 
 a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \frac{-1}{2} \frac{d(x^{i},x)^{2}}{\sigma^{2}} } $
 
-\todo{Paramètre h}
+
 
 b) Si on choisit de prendre tous les points du voisinages
-$ p(x) =  \frac{1}{n} \sum_{i=1}^{n} \frac{1}{smoothing^{d}} \mathcal{N}_{x^{(i)}, \sigma^{2}} $
+$ p(x) =  \frac{1}{n} \sum_{i=1}^{n} \mathcal{N}_{x^{(i)}, \sigma^{2}} $
+\todo{distribuer pour virer la somme?}
 
-c) 
+c) Hyper-paramètre: $\sigma \in \mathds{R}$
 
-Hyper-paramètre: $\sigma$
+Paramètre : On mémorise l'ensemble des données d'entrainement. $( n \times \mathds{R}^{d})$
 
-Paramètre : On mémorise l'ensemble des données d'entrainement.
 On considère cette méthode comme non-paramétrique car le nombre de paramètre varie avec la taille de l'ensemble de données.
 
-\todo{Taille des paramètres}
+
 
 d)
+\todo{Le petit d}
+3 propriété a prouvé: integral, integral=1, toujours positive (ou presque)
 
 \subsection{Densité paramétrique avec Gaussienne isotropique}
 
-a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) }$
+a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{\frac{-\mid\mid x- \mu \mid\mid ^{2}}{2 \Sigma^{2}} }$
 
 
 $\mu$ est le est le vecteur des moyennes, de dimension d.
@@ -71,7 +74,7 @@ $\Sigma$ est la matrice de covariance, de dimension 1.
 
 
 
-b) sigma devient un paramètre ?
+b) Dans le cas de l'estimation par fenêtre de Parzen, il nous faut effectuer une moyenne sur n densités Gaussiennes et, pour chacune d'elles, le point x(i) sert de moyenne $\mathcal{N}_{x^{(i)}, \sigma^{2}}$ avec $\sigma$ qui est un hyperparamètre. Dans le cas présent, on utilise une seule densité Gaussienne pour laquelle il faudra apprendre les valeurs de moyenne $\mu$ et d'écart-type $\sigma$.
 
 c)
 
@@ -92,11 +95,37 @@ a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- 
 	\item $\Sigma$ est la matrice de covariance, de dimension d.
 \end{itemize}
 
-b) \todo{video larochelle covariance zero}
+b)Indépendance des composantes d'un vecteur aléatoire suivant une distribution Gaussienne diagonale :
 
-c)
+Soit $x \in \mathds{R}^{d}$ un vecteur aléatoire qui suit une distribution Gaussienne diagonale $\mathcal{N}_{\mu , \sigma(x)}$
 
-d)
+Posons $x - \mu = k$ et $\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} = s$
+
+\todo{fin de la demo}
+
+
+c) \todo{gd c}
+
+d) \todo{gd d}
+
+
+\subsection{Choix du modèle}
+
+La première tâche à effectuer pour choisir le modèle le plus approprié est de sélectionner un ensemble de tous les modèles que nous pourrions effectuer. Ici, il s'agit des approches présentées aux sections 1.1, 1.2 et 1.3. Ensuite, pour chacun des modèles sélectionnées, on procède ainsi :
+
+\begin{enumerate}
+	\item Soit A , le modèle courant.
+	\item Si le modèle contient des hyper-paramètres, répéter la procédure pour toutes les valeurs acceptables que ces hyper-paramètres peuvent prendre. Appelons cette configuration $\lambda$. Rappelons que l'approche des fenêtres de Parzen à noyau isotropique contient un hyper- paramètre (l'écart-type $\sigma$) tandis que les approches 2 et 3 n'en n'ont aucun ( $\lambda= \O$ ).
+	\item Mélanger les éléments de l'ensemble $D$ s'ils étaient ordonnés.
+	\item Séparer l'ensemble d’entraînement $D$ en deux sous-ensembles $D_{train}$ et $D_{valid}$ . L'ensemble d’entraînement devrait être plus grand que l'ensemble de validation. $x \in \mathds{R}$ qui suit une distribution Gaussienne
+	%\item Entraîner A avec la configuration d'hyper-paramètres choisis sur l'ensemble d'entraînement. On obtient alors : f^(Aλ)=Aλ(Dtrain)
+	%\item Evaluer le résultat à l'aide de l'ensemble de validation. e = R^ ( f ^ , D ) (Aλ) (Aλ) valid
+
+\end{enumerate}
+
+%Une fois que ce travail a été effectuer pour tous les algorithmes et, pour chacun, sur chaque configurations d'hyper-paramètres λ jugés admissibles, on regarde les valeurs de e(Aλ) obtenues. Le modèle A qui retourne une erreur de validation minimale e* sera alors sélectionner. λ (Aλ)
+%Nous aurions également pu séparer D en 3 sous-ensembles plutôt que 2 et ainsi ajouter un ensemble de test. Une fois l'algorithme optimal trouvé à l'aide de l'ensemble d'entraînement et de l'ensemble de validation, nous aurions pu calculer un estimé non-biaisé de la performance de généralisation de l'algorithme choisit en calculant l'erreur empirique de validation sur l'ensemble de test; soit un ensemble de données dont le valeurs n'ont jamais été utilisées pour sélectionner l'algorithme dans les étapes précédantes. Cette étape nous permet de nous assurer (si nous avons assez de donner pour pouvoir effectuer un test concluent) que l'algorithme sélectionné est capable de généraliser sur de nouvelles données et qu'il n'est pas juste efficace sur les données de Dtrain et Dvalid .
+
 
 
 \section{Partie Théorique : Classifieurs de Bayes}
