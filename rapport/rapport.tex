@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage{amssymb}
 \usepackage{dsfont}
+\usepackage{amsmath}
 
 \linespread{1.1}
 
@@ -66,7 +67,7 @@ d)
 
 \subsection{Densité paramétrique avec Gaussienne isotropique}
 
-a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{\frac{-\mid\mid x- \mu \mid\mid ^{2}}{2 \Sigma^{2}} }$
+a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{\frac{-\mid\mid x- \mu \mid\mid ^{2}}{2 \sigma^{2}} }$
 
 
 $\mu$ est le est le vecteur des moyennes, de dimension d.
@@ -95,19 +96,46 @@ a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- 
 	\item $\Sigma$ est la matrice de covariance, de dimension d.
 \end{itemize}
 
+\[
+\Sigma =
+\begin{bmatrix}
+    \sigma_{1} & 0 & 0 & \dots  & 0 \\
+    0 & \sigma_{2} & 0 & \dots  & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \dots  & \sigma_{n}
+\end{bmatrix}
+\]
+
 b)Indépendance des composantes d'un vecteur aléatoire suivant une distribution Gaussienne diagonale :
 
 Soit $x \in \mathds{R}^{d}$ un vecteur aléatoire qui suit une distribution Gaussienne diagonale $\mathcal{N}_{\mu , \sigma(x)}$
 
 Posons $x - \mu = k$ et $\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} = s$
-
-\todo{mat}
-
+\[
+\Sigma =
+\begin{bmatrix}
+    \sigma_{1} & 0 & 0 & \dots  & 0 \\
+    0 & \sigma_{2} & 0 & \dots  & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \dots  & \sigma_{n}
+\end{bmatrix}
+\Sigma^{-1} =
+\begin{bmatrix}
+    \frac{1}{\sigma_{1}} & 0 & 0 & \dots  & 0 \\
+    0 & \frac{1}{\sigma_{2}} & 0 & \dots  & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \dots  & \frac{1}{\sigma_{n}}
+\end{bmatrix}
+\]
 $p(x) = \mathcal{N}_{\mu , \Sigma(x)} = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) } = s \times e^{\frac{-1}{2} k^{t} \Sigma^{-1} k }$
 
-$p(x) = s \times e^{\frac{-1}{2} (\frac{k_{1}}{\sigma_{1}^{2}} \frac{k_{2}}{\sigma_{2}^{2}} ... \frac{k_{d}}{\sigma_{d}^{2}} )k } $
+$p(x) = s \times e^{\frac{-1}{2} (\frac{k_{1}}{\sigma_{1}^{2}} \frac{k_{2}}{\sigma_{2}^{2}} ... \frac{k_{d}}{\sigma_{d}^{2}} )k }  = s \times e^{\frac{-1}{2} \sum_{i=1}^{d} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }$
 
-\todo{fin de la demo}
+$p(x) = s \prod_{i=1}^{d} e^{\frac{-1}{2} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }  = s \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{i} - \mu)^{T} \Sigma^{-1} (x^{i} - \mu) } $ où $x^{i}$ est un vecteur de taille $d$ avec la $i^{eme}$ valeur de $x$ en position $i$ et des 0 partout ailleurs.
+
+$p(x) =\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{i} - \mu)^{T} \Sigma^{-1} (x^{i} - \mu) }  $
+
+$p(x) = \prod_{i=1}^{d} p(x^{i}) $
 
 
 La densité estimée pour à partir d'un vecteur aléatoire $x \in R$ qui suit une distribution gaussienne diagonale est égale au produit des densités estimées des composantes de ce vecteur aléatoire. On peut en conclure que ces composantes sont des variables aléatoires indépendantes.
