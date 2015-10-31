@@ -24,8 +24,12 @@ class DensiteGaussienne:
 
     def p(self, x):
         sigma = numpy.sqrt(self._sigma_sq)
-        # TODO dimension d
-        return 1./(numpy.sqrt(2.*numpy.pi)*sigma)* numpy.exp(-numpy.power((x - self._mu)/sigma, 2.)/2)
+        if self._n_dims == 1:
+            expo = -(float(x) - self._mu)**2
+            expo /= 2*(float(sigma)**2)
+            return 1./(numpy.sqrt(2.*numpy.pi)*sigma)* numpy.exp(expo)
+        else:
+            pass # TODO dimension d
 
     def compute_predictions(self, test_data):
         """
@@ -52,10 +56,15 @@ class DensiteParzen:
     def p(self, x):
         res = 0
         for i,xi in enumerate(self._data):
-            res += 1./((2.*numpy.pi)**(self._n_dims/2.) * (self._sigma**self._n_dims)) \
-            * numpy.exp(-numpy.power(self._distanceFunction(x, xi)/self._sigma**2, 2.)/2)
+            expo = -1/2. * self._distanceFunction(x, xi)**2
+            expo /= (self._sigma**2)
+            res += 1./(((2.*numpy.pi)**(self._n_dims/2.)) * (self._sigma**self._n_dims)) \
+            * numpy.exp(expo)
         res /= float(len(self._data))
         return res
 
     def compute_predictions(self, test_data):
-        pass
+        log_prob = []
+        for i in test_data:
+            log_prob.append(numpy.log(i))
+        return res
