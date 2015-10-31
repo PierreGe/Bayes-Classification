@@ -24,7 +24,8 @@ class DensiteGaussienne:
 
     def p(self, x):
         sigma = numpy.sqrt(self._sigma_sq)
-        return 1./(numpy.sqrt(2.*numpy.pi)*sigma)*numpy.exp(-numpy.power((x - self._mu)/sigma, 2.)/2)
+        # TODO dimension d
+        return 1./(numpy.sqrt(2.*numpy.pi)*sigma)* numpy.exp(-numpy.power((x - self._mu)/sigma, 2.)/2)
 
     def compute_predictions(self, test_data):
         """
@@ -43,12 +44,18 @@ class DensiteParzen:
     def __init__(self, n_dims, sigma):
         self._n_dims = n_dims
         self._sigma = sigma
+        self._distanceFunction = utilitaires.minkowski_mat
 
     def train(self, train_data):
         self._data = train_data
 
     def p(self, x):
-        pass
+        res = 0
+        for i,xi in enumerate(self._data):
+            res += 1./((2.*numpy.pi)**(self._n_dims/2.) * (self._sigma**self._n_dims)) \
+            * numpy.exp(-numpy.power(self._distanceFunction(x, xi)/self._sigma**2, 2.)/2)
+        res /= float(len(self._data))
+        return res
 
     def compute_predictions(self, test_data):
         pass

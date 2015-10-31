@@ -23,16 +23,35 @@ class Densite1D:
 
 
     def getOneDimGraph(self):
-        trainSetPlot = plt.plot(self.oneDimData,numpy.array([i/500. for i in range(len(self.oneDimData))]), 'g^', label= "Ensemble entrainement")
+        trainSetPlot, = plt.plot(self.oneDimData,numpy.array([i/500. for i in range(len(self.oneDimData))]), 'bo')
+
         dg = densite_fonction.DensiteGaussienne(1)
         dg.train(self.oneDimData)
-        mu = dg.getMu()
-        sigma = dg.getSigma()
         x = numpy.linspace(3,7,1000)
-        densParamPlot2 = plt.plot(x,[dg.p(i) for i in x], 'red', label= "Densite parametrique")
+        densParamPlot, = plt.plot(x,[dg.p(i) for i in x], 'red', label= "Densite parametrique")
 
-        #plt.legend(handles=[trainSetPlot, densParamPlot])
-        plt.axis([3, 7, 0, 5])
+
+        sigma = 0.2
+        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg.train(self.oneDimData)
+        x = numpy.linspace(3,7,1000)
+        parzenParamPlotGrand, = plt.plot(x,[dg.p(i) for i in x], 'blue', label= "Parzen sigma petit")
+
+        sigma = 1
+        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg.train(self.oneDimData)
+        x = numpy.linspace(3,7,1000)
+        parzenParamPlotPetit, = plt.plot(x,[dg.p(i) for i in x], 'green', label= "Parzen sigma grand")
+
+        sigma = 0.45
+        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg.train(self.oneDimData)
+        x = numpy.linspace(3,7,1000)
+        parzenParamPlotAdequat, = plt.plot(x,[dg.p(i) for i in x], 'yellow', label= "Parzen sigma adequat")
+
+        plt.legend([trainSetPlot, densParamPlot, parzenParamPlotGrand,parzenParamPlotPetit,parzenParamPlotAdequat], ["Ensemble entrainement", "Densite parametrique","Parzen sigma petit","Parzen sigma grand","Parzen sigma adequat"])
+        plt.axis([3, 7, 0, 1.7])
+        plt.title('1D Gaussian and Parzen probability density')
         plt.show()
 
 
