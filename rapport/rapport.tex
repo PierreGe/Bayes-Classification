@@ -101,7 +101,16 @@ Soit $x \in \mathds{R}^{d}$ un vecteur aléatoire qui suit une distribution Gaus
 
 Posons $x - \mu = k$ et $\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} = s$
 
+\todo{mat}
+
+$p(x) = \mathcal{N}_{\mu , \Sigma(x)} = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) } = s \times e^{\frac{-1}{2} k^{t} \Sigma^{-1} k }$
+
+$p(x) = s \times e^{\frac{-1}{2} (\frac{k_{1}}{\sigma_{1}^{2}} \frac{k_{2}}{\sigma_{2}^{2}} ... \frac{k_{d}}{\sigma_{d}^{2}} )k } $
+
 \todo{fin de la demo}
+
+
+La densité estimée pour à partir d'un vecteur aléatoire $x \in R$ qui suit une distribution gaussienne diagonale est égale au produit des densités estimées des composantes de ce vecteur aléatoire. On peut en conclure que ces composantes sont des variables aléatoires indépendantes.
 
 
 c) \todo{gd c}
@@ -114,17 +123,16 @@ d) \todo{gd d}
 La première tâche à effectuer pour choisir le modèle le plus approprié est de sélectionner un ensemble de tous les modèles que nous pourrions effectuer. Ici, il s'agit des approches présentées aux sections 1.1, 1.2 et 1.3. Ensuite, pour chacun des modèles sélectionnées, on procède ainsi :
 
 \begin{enumerate}
-	\item Soit A , le modèle courant.
+	\item Soit $A$ , le modèle courant.
 	\item Si le modèle contient des hyper-paramètres, répéter la procédure pour toutes les valeurs acceptables que ces hyper-paramètres peuvent prendre. Appelons cette configuration $\lambda$. Rappelons que l'approche des fenêtres de Parzen à noyau isotropique contient un hyper- paramètre (l'écart-type $\sigma$) tandis que les approches 2 et 3 n'en n'ont aucun ( $\lambda= \O$ ).
 	\item Mélanger les éléments de l'ensemble $D$ s'ils étaient ordonnés.
-	\item Séparer l'ensemble d’entraînement $D$ en deux sous-ensembles $D_{train}$ et $D_{valid}$ . L'ensemble d’entraînement devrait être plus grand que l'ensemble de validation. $x \in \mathds{R}$ qui suit une distribution Gaussienne
-	%\item Entraîner A avec la configuration d'hyper-paramètres choisis sur l'ensemble d'entraînement. On obtient alors : f^(Aλ)=Aλ(Dtrain)
-	%\item Evaluer le résultat à l'aide de l'ensemble de validation. e = R^ ( f ^ , D ) (Aλ) (Aλ) valid
-
+	\item Séparer l'ensemble d'entraînement $D$ en deux sous-ensembles $D_{train}$ et $D_{valid}$. L'ensemble d’entraînement devrait être plus grand que l'ensemble de validation. $x \in \mathds{R}$ qui suit une distribution Gaussienne
+	\item Entraîner $A$ avec la configuration d'hyper-paramètres choisis sur l'ensemble d'entraînement. On obtient alors : $\widehat{f} (A_{\lambda})=A_{\lambda}(D_{train})$
+	\item Evaluer le résultat à l'aide de l'ensemble de validation. $e_{(A_{\lambda})} = \widehat{R} ( \widehat{f}_{(A_{\lambda})} , D_{valid} )$
 \end{enumerate}
 
-%Une fois que ce travail a été effectuer pour tous les algorithmes et, pour chacun, sur chaque configurations d'hyper-paramètres λ jugés admissibles, on regarde les valeurs de e(Aλ) obtenues. Le modèle A qui retourne une erreur de validation minimale e* sera alors sélectionner. λ (Aλ)
-%Nous aurions également pu séparer D en 3 sous-ensembles plutôt que 2 et ainsi ajouter un ensemble de test. Une fois l'algorithme optimal trouvé à l'aide de l'ensemble d'entraînement et de l'ensemble de validation, nous aurions pu calculer un estimé non-biaisé de la performance de généralisation de l'algorithme choisit en calculant l'erreur empirique de validation sur l'ensemble de test; soit un ensemble de données dont le valeurs n'ont jamais été utilisées pour sélectionner l'algorithme dans les étapes précédantes. Cette étape nous permet de nous assurer (si nous avons assez de donner pour pouvoir effectuer un test concluent) que l'algorithme sélectionné est capable de généraliser sur de nouvelles données et qu'il n'est pas juste efficace sur les données de Dtrain et Dvalid .
+Une fois que ce travail a été effectuer pour tous les algorithmes et, pour chacun, sur chaque configurations d'hyper-paramètres $\lambda$ jugés admissibles, on regarde les valeurs de $e_{(A_{\lambda})}$ obtenues. Le modèle $A_{\lambda}$ qui retourne une erreur de validation minimale $e*_{A_{\lambda}}$ sera alors sélectionner. 
+Nous aurions également pu séparer $D$ en 3 sous-ensembles plutôt que 2 et ainsi ajouter un ensemble de test. Une fois l'algorithme optimal trouvé à l'aide de l'ensemble d'entraînement et de l'ensemble de validation, nous aurions pu calculer un estimé non-biaisé de la performance de généralisation de l'algorithme choisit en calculant l'erreur empirique de validation sur l'ensemble de test; soit un ensemble de données dont le valeurs n'ont jamais été utilisées pour sélectionner l'algorithme dans les étapes précédantes. Cette étape nous permet de nous assurer (si nous avons assez de donner pour pouvoir effectuer un test concluent) que l'algorithme sélectionné est capable de généraliser sur de nouvelles données et qu'il n'est pas juste efficace sur les données de $D_{train}$ et $D_{valid}$.
 
 
 
