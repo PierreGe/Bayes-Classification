@@ -27,7 +27,6 @@ class Densite1D:
 
         dg = densite_fonction.DensiteGaussienne(1)
         dg.train(self.oneDimData)
-        print(dg.getSigma())
         x = numpy.linspace(3,7,1000)
         densParamPlot, = plt.plot(x,[dg.p(i) for i in x], 'red', label= "Densite parametrique")
 
@@ -53,6 +52,8 @@ class Densite1D:
         plt.legend([trainSetPlot, densParamPlot, parzenParamPlotGrand,parzenParamPlotPetit,parzenParamPlotAdequat], ["Ensemble entrainement", "Densite parametrique","Parzen sigma petit","Parzen sigma grand","Parzen sigma adequat"])
         plt.axis([3, 7, 0, 1.7])
         plt.title('1D Gaussian and Parzen probability density')
+        plt.xlabel('x')
+        plt.ylabel('Probability density')
         plt.show()
 
 
@@ -71,6 +72,77 @@ class Densite2D:
                 oneDimData.append([l[param1], l[param2]])
         return numpy.array(oneDimData)
 
+    def getParamDensityGraph(self):
+        min_x1 = min([i[0] for i in self.twoDimData])
+        max_x1 = max([i[0] for i in self.twoDimData])
+        min_x2 = min([i[1] for i in self.twoDimData])
+        max_x2 = max(([i[1] for i in self.twoDimData]))
+        nDots = 100
+        plt.plot(numpy.array([i[0] for i in self.twoDimData]),numpy.array([i[1] for i in self.twoDimData]), 'bo')
+
+
+        xgrid = numpy.linspace(min_x1,max_x1,num=nDots)
+        ygrid = numpy.linspace(min_x2,max_x2,num=nDots)
+        #theGrid = numpy.array(utilitaires.combine(xgrid,ygrid))
+
+
+        dg = densite_fonction.DensiteGaussienne(2)
+        dg.train(self.twoDimData)
+
+        resZ = [[ 0 for i in range(nDots)] for j in range(nDots)]
+        for ix, x in enumerate(xgrid):
+            for iy, y in enumerate(ygrid):
+                resZ[ix][iy] = float(dg.p([x,y]))
+
+        plt.contour(xgrid,ygrid,numpy.array(resZ))
+
+
+        plt.axis([min_x1, max_x1, min_x2, max_x2])
+        plt.title('2D Gaussian border')
+        plt.xlabel('x1')
+        plt.ylabel('x2')
+        plt.show()
+
+    def getParzenSmallSigma(self):
+        min_x1 = min([i[0] for i in self.twoDimData])
+        max_x1 = max([i[0] for i in self.twoDimData])
+        min_x2 = min([i[1] for i in self.twoDimData])
+        max_x2 = max(([i[1] for i in self.twoDimData]))
+        nDots = 100
+        plt.plot(numpy.array([i[0] for i in self.twoDimData]),numpy.array([i[1] for i in self.twoDimData]), 'bo')
+
+
+        xgrid = numpy.linspace(min_x1,max_x1,num=nDots)
+        ygrid = numpy.linspace(min_x2,max_x2,num=nDots)
+
+        sigma = 0.5
+        dg = densite_fonction.DensiteParzen(2,sigma)
+        dg.train(self.twoDimData)
+
+        resZ = [[ 0 for i in range(nDots)] for j in range(nDots)]
+        for ix, x in enumerate(xgrid):
+            for iy, y in enumerate(ygrid):
+                resZ[ix][iy] = float(dg.p([x,y]))
+
+        plt.contour(xgrid,ygrid,numpy.array(resZ))
+
+
+        plt.axis([min_x1, max_x1, min_x2, max_x2])
+        plt.title('2D Gaussian border')
+        plt.xlabel('x1')
+        plt.ylabel('x2')
+        plt.show()
+
+    def getParzenBigSigma(self):
+        pass
+
+    def getParzenGoodSigma(self):
+        pass
+
 if __name__ == '__main__':
-    d1d = Densite1D()
-    d1d.getOneDimGraph()
+    #d1d = Densite1D()
+    #d1d.getOneDimGraph()
+
+    d2d = Densite2D()
+    #d2d.getParamDensityGraph()
+    d2d.getParzenSmallSigma()

@@ -23,13 +23,21 @@ class DensiteGaussienne:
         return numpy.sqrt(self._sigma_sq)
 
     def p(self, x):
-        sigma = numpy.sqrt(self._sigma_sq)
         if self._n_dims == 1:
+            sigma = numpy.sqrt(self._sigma_sq)
             expo = -(float(x) - self._mu)**2
             expo /= 2*(float(sigma)**2)
             return 1./(numpy.sqrt(2.*numpy.pi)*sigma)* numpy.exp(expo)
         else:
-            pass # TODO dimension d
+            sigma = [ numpy.sqrt(i) for i in self._sigma_sq]
+            sigma[0] += 0.1
+            norma = 1./((2.*numpy.pi)*(self._n_dims/2.) * numpy.sqrt(numpy.prod(sigma)))
+            expo1 = numpy.transpose ( numpy.array(x) - self._mu )
+            expo2 = numpy.linalg.inv( numpy.diag(sigma))
+            expo3 = ( numpy.array(x) - self._mu )
+            expo = numpy.dot(expo1, expo2)
+            expo = numpy.dot(expo, expo3)
+            return norma * numpy.exp(-1/2. *expo)
 
     def compute_predictions(self, test_data):
         """
