@@ -56,7 +56,7 @@ class DensiteParzen:
     def __init__(self, n_dims, sigma):
         self._n_dims = n_dims
         self._sigma = sigma
-        self._distanceFunction = utilitaires.minkowski_mat
+        self._distanceFunction = utilitaires.minkowski
 
     def train(self, train_data):
         self._data = train_data

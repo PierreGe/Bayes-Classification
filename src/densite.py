@@ -5,12 +5,10 @@ import random
 import densite_fonction
 
 
-
 class Densite1D:
     def __init__(self):
         self.iris = numpy.loadtxt('iris.txt')
         self.oneDimData = self._getOneDimDate()
-
 
     def _getOneDimDate(self):
         chosenClass = 1
@@ -21,40 +19,42 @@ class Densite1D:
                 oneDimData.append(l[param])
         return numpy.array(oneDimData)
 
-
     def getOneDimGraph(self):
-        trainSetPlot, = plt.plot(self.oneDimData,numpy.array([i/1000. for i in range(len(self.oneDimData))]), 'bo')
+        trainSetPlot, = plt.plot(self.oneDimData, numpy.array([i / 1000. for i in range(len(self.oneDimData))]), 'bo')
 
         dg = densite_fonction.DensiteGaussienne(1)
         dg.train(self.oneDimData)
-        x = numpy.linspace(3,7,1000)
-        densParamPlot, = plt.plot(x,[dg.p(i) for i in x], 'red', label= "Densite parametrique")
-
+        x = numpy.linspace(3, 7, 1000)
+        densParamPlot, = plt.plot(x, [dg.p(i) for i in x], 'red', label="Densite parametrique")
 
         sigma = 0.05
-        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg = densite_fonction.DensiteParzen(1, sigma)
         dg.train(self.oneDimData)
-        x = numpy.linspace(3,7,1000)
-        parzenParamPlotGrand, = plt.plot(x,[dg.p(i) for i in x], 'yellow', label= "Parzen sigma petit")
+        x = numpy.linspace(3, 7, 1000)
+        parzenParamPlotGrand, = plt.plot(x, [dg.p(i) for i in x], 'yellow', label="Parzen sigma petit")
 
         sigma = 1
-        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg = densite_fonction.DensiteParzen(1, sigma)
         dg.train(self.oneDimData)
-        x = numpy.linspace(3,7,1000)
-        parzenParamPlotPetit, = plt.plot(x,[dg.p(i) for i in x], 'green', label= "Parzen sigma grand")
+        x = numpy.linspace(3, 7, 1000)
+        parzenParamPlotPetit, = plt.plot(x, [dg.p(i) for i in x], 'green', label="Parzen sigma grand")
 
         sigma = 0.349
-        dg = densite_fonction.DensiteParzen(1,sigma)
+        dg = densite_fonction.DensiteParzen(1, sigma)
         dg.train(self.oneDimData)
-        x = numpy.linspace(3,7,1000)
-        parzenParamPlotAdequat, = plt.plot(x,[dg.p(i) for i in x], 'blue', label= "Parzen sigma adequat")
+        x = numpy.linspace(3, 7, 1000)
+        parzenParamPlotAdequat, = plt.plot(x, [dg.p(i) for i in x], 'blue', label="Parzen sigma adequat")
 
-        plt.legend([trainSetPlot, densParamPlot, parzenParamPlotGrand,parzenParamPlotPetit,parzenParamPlotAdequat], ["Ensemble entrainement", "Densite parametrique","Parzen sigma petit","Parzen sigma grand","Parzen sigma adequat"])
+        plt.legend([trainSetPlot, densParamPlot, parzenParamPlotGrand, parzenParamPlotPetit, parzenParamPlotAdequat],
+                   ["Ensemble entrainement", "Densite parametrique", "Parzen sigma petit", "Parzen sigma grand",
+                    "Parzen sigma adequat"])
         plt.axis([3, 7, 0, 1.7])
-        plt.title('1D Gaussian and Parzen probability density')
+        title = '1D Gaussian and Parzen probability density'
+        plt.title(title)
         plt.xlabel('x')
         plt.ylabel('Probability density')
-        plt.show()
+        plt.savefig(title.replace(" ", "_") + ".png")
+        plt.close()
 
 
 class Densite2D:
@@ -78,71 +78,66 @@ class Densite2D:
         min_x2 = min([i[1] for i in self.twoDimData])
         max_x2 = max(([i[1] for i in self.twoDimData]))
         nDots = 100
-        plt.plot(numpy.array([i[0] for i in self.twoDimData]),numpy.array([i[1] for i in self.twoDimData]), 'bo')
+        plt.plot(numpy.array([i[0] for i in self.twoDimData]), numpy.array([i[1] for i in self.twoDimData]), 'bo')
 
-
-        xgrid = numpy.linspace(min_x1,max_x1,num=nDots)
-        ygrid = numpy.linspace(min_x2,max_x2,num=nDots)
-        #theGrid = numpy.array(utilitaires.combine(xgrid,ygrid))
-
+        xgrid = numpy.linspace(min_x1, max_x1, num=nDots)
+        ygrid = numpy.linspace(min_x2, max_x2, num=nDots)
 
         dg = densite_fonction.DensiteGaussienne(2)
         dg.train(self.twoDimData)
 
-        resZ = [[ 0 for i in range(nDots)] for j in range(nDots)]
+        resZ = [[0 for i in range(nDots)] for j in range(nDots)]
         for ix, x in enumerate(xgrid):
             for iy, y in enumerate(ygrid):
-                resZ[ix][iy] = float(dg.p([x,y]))
+                resZ[ix][iy] = float(dg.p([x, y]))
 
-        plt.contour(xgrid,ygrid,numpy.array(resZ))
-
+        plt.contour(xgrid, ygrid, numpy.array(resZ))
 
         plt.axis([min_x1, max_x1, min_x2, max_x2])
-        plt.title('2D Gaussian border')
+        title = '2D Gaussian border'
+        plt.title(title)
         plt.xlabel('x1')
         plt.ylabel('x2')
-        plt.show()
+        plt.savefig(title.replace(" ", "_") + ".png")
+        plt.close()
 
-    def getParzenSmallSigma(self):
+    def getParzenGraph(self, sigma):
         min_x1 = min([i[0] for i in self.twoDimData])
         max_x1 = max([i[0] for i in self.twoDimData])
         min_x2 = min([i[1] for i in self.twoDimData])
         max_x2 = max(([i[1] for i in self.twoDimData]))
         nDots = 100
-        plt.plot(numpy.array([i[0] for i in self.twoDimData]),numpy.array([i[1] for i in self.twoDimData]), 'bo')
+        plt.plot(numpy.array([i[0] for i in self.twoDimData]), numpy.array([i[1] for i in self.twoDimData]), 'bo')
 
+        xgrid = numpy.linspace(min_x1, max_x1, num=nDots)
+        ygrid = numpy.linspace(min_x2, max_x2, num=nDots)
 
-        xgrid = numpy.linspace(min_x1,max_x1,num=nDots)
-        ygrid = numpy.linspace(min_x2,max_x2,num=nDots)
-
-        sigma = 0.5
-        dg = densite_fonction.DensiteParzen(2,sigma)
+        dg = densite_fonction.DensiteParzen(2, sigma)
         dg.train(self.twoDimData)
 
-        resZ = [[ 0 for i in range(nDots)] for j in range(nDots)]
+        resZ = [[0 for i in range(nDots)] for j in range(nDots)]
         for ix, x in enumerate(xgrid):
             for iy, y in enumerate(ygrid):
-                resZ[ix][iy] = float(dg.p([x,y]))
+                resZ[ix][iy] = float(dg.p([x, y]))
 
-        plt.contour(xgrid,ygrid,numpy.array(resZ))
-
+        plt.contour(xgrid, ygrid, numpy.array(resZ))
 
         plt.axis([min_x1, max_x1, min_x2, max_x2])
-        plt.title('2D Gaussian border')
+        title = '2D Parzen sigma=' + str(sigma)
+        plt.title(title)
         plt.xlabel('x1')
         plt.ylabel('x2')
-        plt.show()
+        plt.savefig(title.replace(" ", "_") + ".png")
+        plt.close()
+        # plt.show()
 
-    def getParzenBigSigma(self):
-        pass
-
-    def getParzenGoodSigma(self):
-        pass
 
 if __name__ == '__main__':
-    #d1d = Densite1D()
-    #d1d.getOneDimGraph()
+    d1d = Densite1D()
+    d1d.getOneDimGraph()
 
     d2d = Densite2D()
-    #d2d.getParamDensityGraph()
-    d2d.getParzenSmallSigma()
+    d2d.getParamDensityGraph()
+    d2d.getParzenGraph(0.08)
+    d2d.getParzenGraph(0.40)
+    d2d.getParzenGraph(4)

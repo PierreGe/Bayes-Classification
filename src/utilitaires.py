@@ -5,18 +5,21 @@ import pylab
 
 
 
-def minkowski_mat(x, Y, p=2):
+def minkowski(x, y, p=2.):
     """
-    Calcule la distance Minkowski entre un vecteur x et une matrice Y
+    Calcule la distance Minkowski entre un vecteur x et une vecteur Y
     """
     if type(x) == float or type(x) == int:
         x = numpy.array([x])
-    if type(Y) == float or type(Y) == int:
-        Y = numpy.array([Y])
-    if type(Y) == numpy.float64:
-        return (numpy.abs(x - Y))
+    if type(y) == float or type(y) == int:
+        y = numpy.array([y])
+    if type(y) == numpy.float64:
+        return (numpy.abs(x - y))
     else:
-        return (numpy.sum((numpy.abs(x - Y)) ** p, axis=1)) ** (1.0 / p)
+        sum = 0
+        for i in range(len(x)):
+            sum += numpy.abs(x[i] - y[i]) ** p
+        return sum ** (1.0 / p)
 
 
 ##
