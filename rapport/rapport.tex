@@ -127,6 +127,7 @@ Posons $x - \mu = k$ et $\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} = s$
     0 & 0 & 0 & \dots  & \frac{1}{\sigma_{n}}
 \end{bmatrix}
 \]
+
 $p(x) = \mathcal{N}_{\mu , \Sigma(x)} = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) } = s \times e^{\frac{-1}{2} k^{t} \Sigma^{-1} k }$
 
 $p(x) = s \times e^{\frac{-1}{2} (\frac{k_{1}}{\sigma_{1}^{2}} \frac{k_{2}}{\sigma_{2}^{2}} ... \frac{k_{d}}{\sigma_{d}^{2}} )k }  = s \times e^{\frac{-1}{2} \sum_{i=1}^{d} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }$
@@ -168,11 +169,22 @@ Nous aurions également pu séparer $D$ en 3 sous-ensembles plutôt que 2 et ain
 
 \subsection{Classifieur de Bayes obtenu avec des densités paramétriques Gaussiennes diagonales}
 
-a)
+a)Pour la probabilité a postériori.
+\begin{itemize}
+	\item $\mu$ est le est le vecteur des moyennes, de dimension d.
+	\item $\Sigma$ est la matrice de covariance, de dimension d.
+\end{itemize}
+Pour la probabilité a priori.
+\begin{itemize}
+	\item $\mu$ la proportion d'element de chaque classe, de dimension m.
+\end{itemize}
 
 b)
 
 c)
+$P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
+
+$P(Y=c | X=x)  = \frac{ p_{c}(x) P_{c}}{p_{c'} P_{c'} } $
 
 \subsection{Classifieur de Bayes obtenu avec des fenêtres de Parzen à noyau Gaussien isotropique}
 
@@ -187,6 +199,18 @@ a)
 
 b)
 
+\section{Partie Pratique : Estimation de densité}
+
+\subsection{Densité 1D}
+
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/1D_Gaussian_and_Parzen_probability_density} 
+	\centering
+	\caption{Comparaison de la densité paramétrique et la densité de Parzen avec différents sigma}
+	\label{fig:comp}
+\end{figure}
+
+\subsection{Densité 2D}
 
 
 \end{document}
