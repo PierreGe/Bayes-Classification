@@ -6,7 +6,7 @@ import classifieur_bayes
 
 iris = np.loadtxt("iris.txt")
 #4.1 Mélange les exemples d'Iris et diviser l'ensemble de tous les exemples en 2.
-np.random.seed(123)
+#np.random.seed(123)
 np.random.shuffle(iris)
 
 #On place 108 exemples dans l'ensemble d'entrainement et 42 dans l'ensemble de validation
@@ -34,7 +34,7 @@ for i in range(len(iris)-trainSetSize):
 # Voir classifieur_bayes.py
 
 #4.3 b) Entrainement d'un classifieur de Bayes sur l'ensemble d'entrainement (d=2) et visualisation des résultats
-sigmas = [0.08, 0.4, 4]
+sigmas = [0.08, 9, 20]
 
 for sigma in sigmas:
     args = {'sigma': sigma}
@@ -65,11 +65,14 @@ for sigma in sigmas:
     pylab.scatter(grille[:, 0], grille[:, 1], s=50, c=classesPreditesGrille, alpha=0.25)
     pylab.scatter(partialTrainSet[:, 0], partialTrainSet[:, 1], c=iris[0:trainSetSize, -1], marker='v', s=100)
     pylab.scatter(partialValidationSet[:, 0], partialValidationSet[:, 1], c=iris[trainSetSize:, -1], marker='s', s=100)
+    #pylab.show()
+    pylab.savefig('bayes_parzen_'+str(sigma)+'.png')
+    pylab.close()
 
-def calculErreurs(trainSet, validationSet, d, nClasses):
+def calculErreurs(trainSet, validationSet, d, nClasses, sigmas):
     tauxErreurs = []
 
-    for i in range(1, 202, 2):
+    for i in sigmas:
         sigma = i/100.0
         args = {'sigma': sigma}
         classifieur = classifieur_bayes.creerClassifieur(trainSet, "parzen", nClasses, args)
@@ -79,29 +82,28 @@ def calculErreurs(trainSet, validationSet, d, nClasses):
         logProbabiliteValidation = classifieur.computePredictions(validationSet[:, :-1])
         classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
 
-        tauxErreurs.append(classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation, trainSetSize))
+        tauxErreurs.append(classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation))
 
     tauxErreurs = np.array(tauxErreurs)
-    minTrain = np.argmin(tauxErreurs[0, :])+1
-    minValid = np.argmin(tauxErreurs[1, :])+1
+    sigmaMin = np.argmin(tauxErreurs[1, :])+1
 
-    print "Meilleur sigma entrainement: "+str(float(minTrain)/100)
-    classifieur_bayes.afficherTauxErreur(tauxErreurs[np.argmin(tauxErreurs[:, 0]), 0], tauxErreurs[np.argmin(tauxErreurs[:, 0]), 1], d)
-
-    print "Meilleur sigma validation: "+str(float(minValid)/100)
+    print "Meilleur sigma: "+str(float(sigmaMin)/100)
     classifieur_bayes.afficherTauxErreur(tauxErreurs[np.argmin(tauxErreurs[:, 1]), 0], tauxErreurs[np.argmin(tauxErreurs[:, 1]), 1], d)
 
-    sigmas = range(1, 101)
     for i in range(len(sigmas)):
         sigmas[i] /= 100.0
 
     pylab.plot(sigmas, tauxErreurs[:, 0])
     pylab.plot(sigmas, tauxErreurs[:, 1])
-    pylab.show()
+    pylab.savefig('bayes_parzen_'+str(d)+'d.png')
+    #pylab.show()
+    pylab.close()
 
 #4.2 c) Calcul des erreurs en dimension d = 2
-calculErreurs(partialTrainSet, partialValidationSet, 2, 3)
+sigmas = range(1, 2000, 20)
+calculErreurs(partialTrainSet, partialValidationSet, 2, 3, sigmas)
 
 
 #4.2 d) Calcul des erreurs en dimension d = 4
-calculErreurs(completeTrainSet, completeValidationSet, 4, 3)
+sigmas = range(1, 20000, 200)
+calculErreurs(completeTrainSet, completeValidationSet, 4, 3, sigmas)

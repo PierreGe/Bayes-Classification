@@ -16,8 +16,7 @@ class ClassifieurBayes:
         logPrediction = np.empty((len(validationSet), self.classCount))
 
         for k in range(self.classCount):
-            logPrediction[:, k] = self.models[k].compute_predictions(validationSet) + self.priors[k]
-
+            logPrediction[:, k] = self.models[k].compute_predictions(validationSet) + np.array(self.priors[k])
         return logPrediction
 
 def creerClassifieur(trainSet, type, nbClasses, args=None):
@@ -61,9 +60,10 @@ def creerClassifieur(trainSet, type, nbClasses, args=None):
     classifieur = ClassifieurBayes(modeles, priors)
     return classifieur
 
-def calculateTauxErreur(dataSet, classesPreditesTrain, classesPreditesValidation, trainSetSize):
+def calculateTauxErreur(dataSet, classesPreditesTrain, classesPreditesValidation):
     trainError = 0
     validationError = 0
+    trainSetSize = len(classesPreditesTrain)
 
     for i in range(len(dataSet)):
         if i >= trainSetSize:
@@ -77,10 +77,10 @@ def calculateTauxErreur(dataSet, classesPreditesTrain, classesPreditesValidation
             if dataSet[i, 4] != classePredite:
                 trainError += 1
 
-    tauxErreurTrainSet = (trainError/float(trainSetSize))*100
+    tauxErreurTrainSet = (trainError/float(len(classesPreditesTrain)))*100
 
     if len(classesPreditesValidation) > 0:
-        tauxErreurValidationSet = (validationError/float(trainSetSize))*100
+        tauxErreurValidationSet = (validationError/float(len(classesPreditesValidation)))*100
     else:
         tauxErreurValidationSet = -1
 

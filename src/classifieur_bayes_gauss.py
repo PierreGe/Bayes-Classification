@@ -70,7 +70,7 @@ classesPreditesTrain = logProbabiliteTrain.argmax(1)+1
 logProbabiliteValidation = classifieur.computePredictions(partialValidationSet[:, :-1])
 classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
 
-tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation, trainSetSize)
+tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation)
 classifieur_bayes.afficherTauxErreur(tauxErreur[0], tauxErreur[1], 2)
 
 #4.2 d) Calcul des erreurs en dimension d = 4
@@ -81,7 +81,8 @@ classesPreditesTrain = logProbabiliteTrain.argmax(1)+1
 logProbabiliteValidation = classifieur.computePredictions(completeValidationSet[:, :-1])
 classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
 
-tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation, trainSetSize)
+tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation)
 classifieur_bayes.afficherTauxErreur(tauxErreur[0], tauxErreur[1], 4)
 
 pylab.show()
+pylab.close()
