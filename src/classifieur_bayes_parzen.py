@@ -69,8 +69,8 @@ for sigma in sigmas:
 def calculErreurs(trainSet, validationSet, d, nClasses):
     tauxErreurs = []
 
-    for i in range(1, 101):
-        sigma = i/100
+    for i in range(1, 202, 2):
+        sigma = i/100.0
         args = {'sigma': sigma}
         classifieur = classifieur_bayes.creerClassifieur(trainSet, "parzen", nClasses, args)
         logProbabiliteTrain = classifieur.computePredictions(trainSet[:, :-1])
