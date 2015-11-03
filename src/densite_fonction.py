@@ -76,5 +76,4 @@ class DensiteParzen:
         for i in range(len(test_data)):
             res = numpy.log(self.p(test_data[i]))
             log_prob.append(res)
-        print(log_prob)
         return numpy.array(log_prob)
