@@ -1,9 +1,6 @@
 import numpy
 import matplotlib.pyplot as plt
-import utilitaires
-import random
 import densite_fonction
-
 
 class Densite1D:
     def __init__(self):
