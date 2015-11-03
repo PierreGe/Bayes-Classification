@@ -66,13 +66,15 @@ class DensiteParzen:
         for i,xi in enumerate(self._data):
             expo = -1/2. * self._distanceFunction(x, xi)**2
             expo /= (self._sigma**2)
-            res += 1./(((2.*numpy.pi)**(self._n_dims/2.)) * (self._sigma**self._n_dims)) \
-            * numpy.exp(expo)
+            res += 1./(((2.*numpy.pi)**(self._n_dims/2.)) * (self._sigma**self._n_dims) + 0.0000001)
+            res *= numpy.exp(expo)
         res /= float(len(self._data))
         return res
 
     def compute_predictions(self, test_data):
         log_prob = []
-        for i in test_data:
-            log_prob.append(numpy.log(i))
-        return log_prob
+        for i in range(len(test_data)):
+            res = numpy.log(self.p(test_data[i]))
+            log_prob.append(res)
+        print(log_prob)
+        return numpy.array(log_prob)

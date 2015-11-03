@@ -15,6 +15,8 @@ def minkowski(x, y, p=2.):
         y = numpy.array([y])
     if type(y) == numpy.float64:
         return (numpy.abs(x - y))
+    if type(x) == numpy.float64:
+        return (numpy.abs(x - y))
     else:
         sum = 0
         for i in range(len(x)):
