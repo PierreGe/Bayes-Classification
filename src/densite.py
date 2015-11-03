@@ -53,8 +53,10 @@ class Densite1D:
         plt.title(title)
         plt.xlabel('x')
         plt.ylabel('Probability density')
-        plt.savefig(title.replace(" ", "_") + ".png")
+        fileTitle = title.replace(" ", "_") + ".png"
+        plt.savefig(fileTitle)
         plt.close()
+        print("[Created] file : " + fileTitle)
 
 
 class Densite2D:
@@ -127,9 +129,10 @@ class Densite2D:
         plt.title(title)
         plt.xlabel('x1')
         plt.ylabel('x2')
-        plt.savefig(title.replace(" ", "_") + ".png")
+        fileTitle = title.replace(" ", "_") + ".png"
+        plt.savefig(fileTitle)
         plt.close()
-        # plt.show()
+        print("[Created] file : " + fileTitle)
 
 
 if __name__ == '__main__':
