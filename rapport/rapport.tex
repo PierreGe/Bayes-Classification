@@ -117,14 +117,14 @@ Posons $x - \mu = k$ et $\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} = s$
     \sigma_{1} & 0 & 0 & \dots  & 0 \\
     0 & \sigma_{2} & 0 & \dots  & 0 \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
-    0 & 0 & 0 & \dots  & \sigma_{n}
+    0 & 0 & 0 & \dots  & \sigma_{d}
 \end{bmatrix}
 \Sigma^{-1} =
 \begin{bmatrix}
     \frac{1}{\sigma_{1}} & 0 & 0 & \dots  & 0 \\
     0 & \frac{1}{\sigma_{2}} & 0 & \dots  & 0 \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
-    0 & 0 & 0 & \dots  & \frac{1}{\sigma_{n}}
+    0 & 0 & 0 & \dots  & \frac{1}{\sigma_{d}}
 \end{bmatrix}
 \]
 
@@ -176,7 +176,7 @@ a)Pour la probabilité a postériori.
 \end{itemize}
 Pour la probabilité a priori.
 \begin{itemize}
-	\item $\mu$ la proportion d'element de chaque classe, de dimension m.
+	\item La proportion d'element de chaque classe, de dimension m.
 \end{itemize}
 
 b)
@@ -184,11 +184,17 @@ b)
 c)
 $P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
 
-$P(Y=c | X=x)  = \frac{ p_{c}(x) P_{c}}{p_{c'} P_{c'} } $
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{\hat{p}_{c'} \hat{P}_{c'} } $
+
+avec $ \hat{p}_{c}(x) $ la densité de probabilité apprise (1.2 a) sur tout les points de la classe c.
 
 \subsection{Classifieur de Bayes obtenu avec des fenêtres de Parzen à noyau Gaussien isotropique}
 
-a)
+a) Aucun pour la probabilité à postériori
+Pour la probabilité a priori.
+\begin{itemize}
+	\item La proportion d'element de chaque classe, de dimension m.
+\end{itemize}
 
 b)
 

@@ -1,4 +1,4 @@
-
+#-*- coding: utf-8 -*-
 import densite
 
 
@@ -13,7 +13,7 @@ def main():
     d2d.getParamDensityGraph()
     d2d.getParzenGraph(0.08)
     d2d.getParzenGraph(0.40)
-    d2d.getParzenGraph(4)
+    d2d.getParzenGraph(20)
 
 
 if __name__ == '__main__':
