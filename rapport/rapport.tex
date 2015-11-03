@@ -199,12 +199,23 @@ a)
 
 b)
 
+\section{Implémentation}
+
+Pour tester notre code et l'implémentation, exécuter simplement dans le dossier $src$ :
+\begin{verbatim}
+	python main.py
+\end{verbatim}
+L'ensemble des graphiques vont être sauvé comme image.
+
+Note : Les modules suivants utilisé en labo sont nécessaire : numpy, matplotlib, pylab.
+
+
 \section{Partie Pratique : Estimation de densité}
 
 \subsection{Densité 1D}
 
 \begin{figure}[H]
-	\includegraphics[width=12cm]{images/1D_Gaussian_and_Parzen_probability_density} 
+	\includegraphics[width=12cm]{images/1D_Gaussian_and_Parzen_probability_density.png} 
 	\centering
 	\caption{Comparaison de la densité paramétrique et la densité de Parzen avec différents sigma}
 	\label{fig:comp}
@@ -212,5 +223,34 @@ b)
 
 \subsection{Densité 2D}
 
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/2D_Gaussian_border.png} 
+	\centering
+	\caption{Densité paramétrique gaussienne}
+	\label{fig:comp}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/2D_Parzen_sigma_petit.png} 
+	\centering
+	\caption{Densité de Parzen : sigma trop petit}
+	\label{fig:comp}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/2D_Parzen_sigma_grand.png} 
+	\centering
+	\caption{Densité de Parzen : sigma trop grand}
+	\label{fig:comp}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/2D_Parzen_sigma_ad.png} 
+	\centering
+	\caption{Densité de Parzen : sigma trop adéquat}
+	\label{fig:comp}
+\end{figure}
+
+\section{Partie Pratique : Estimation de densité}
 
 \end{document}
