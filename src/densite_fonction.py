@@ -66,8 +66,7 @@ class DensiteParzen:
         for i,xi in enumerate(self._data):
             expo = -1/2. * self._distanceFunction(x, xi)**2
             expo /= (self._sigma**2)
-            res += 1./(((2.*numpy.pi)**(self._n_dims/2.)) * (self._sigma**self._n_dims) + 0.0000001)
-            res *= numpy.exp(expo)
+            res += 1./(((2.*numpy.pi)**(self._n_dims/2.)) * (self._sigma**self._n_dims) + 0.0000001) * numpy.exp(expo)
         res /= float(len(self._data))
         return res
 
