@@ -86,9 +86,11 @@ def calculateTauxErreur(dataSet, classesPreditesTrain, classesPreditesValidation
 
     return [tauxErreurTrainSet, tauxErreurValidationSet]
 
-def afficherTauxErreur(tauxErreurTrainSet, tauxErreurValidationSet, d):
+def afficherTauxErreur(tauxErreurTrainSet, tauxErreurValidationSet, d, sigma=None):
     print "\n######################"
     print "d="+str(d)
+    if sigma is not None:
+        print "sigma="+str(sigma)
     print "Taux d'erreur sur l'ensemble d'entrainement: %.2f%%" % tauxErreurTrainSet
 
     if tauxErreurValidationSet != -1:

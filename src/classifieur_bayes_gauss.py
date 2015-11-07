@@ -4,85 +4,79 @@ import numpy as np
 import pylab
 import classifieur_bayes
 
-iris = np.loadtxt("iris.txt")
-#4.1 Mélange les exemples d'Iris et diviser l'ensemble de tous les exemples en 2.
-np.random.seed(123)
-np.random.shuffle(iris)
+class ClassifieurBayesGaussien:
+    def __init__(self, d):
+        self.iris = np.loadtxt("iris.txt")
 
-#On place 108 exemples dans l'ensemble d'entrainement et 42 dans l'ensemble de validation
-trainSetSize = 108
-classCount = 3 #Nombre de classes
+        if d > len(self.iris[0]):
+            raise Exception('Le nombre de dimensions est trop grand!')
 
-#d = 4
-completeTrainSet = iris[0:trainSetSize, :]
-completeValidationSet = iris[trainSetSize:, :]
+        #4.1 Mélange les exemples d'Iris et diviser l'ensemble de tous les exemples en 2.
+        np.random.seed(123)
+        np.random.shuffle(self.iris)
 
-#d = 2
-partialTrainSet = np.zeros((trainSetSize, 3))
-for i in range(trainSetSize):
-    partialTrainSet[i][0] = iris[i, 0]
-    partialTrainSet[i][1] = iris[i, 1]
-    partialTrainSet[i][2] = iris[i, -1]
+        #On place 108 exemples dans l'ensemble d'entrainement et 42 dans l'ensemble de validation
+        self.trainSetSize = 108
+        self.classCount = 3 #Nombre de classes
+        self.d = d
 
-partialValidationSet = np.zeros((len(iris)-trainSetSize, 3))
-for i in range(len(iris)-trainSetSize):
-    partialValidationSet[i][0] = iris[i+trainSetSize, 0]
-    partialValidationSet[i][1] = iris[i+trainSetSize, 1]
-    partialValidationSet[i][2] = iris[i+trainSetSize, -1]
+        self.trainSet = np.zeros((self.trainSetSize, d+1))
+        for i in range(self.trainSetSize):
+            for j in range(d):
+                self.trainSet[i][j] = self.iris[i, j]
+            self.trainSet[i][d] = self.iris[i, -1]
 
-#4.2 a) Algorithme de classifieur de Bayes basé sur des densités paramétriques Gaussiennes diagonales
-# Voir classifieur_bayes.py
+        self.validationSet = np.zeros((len(self.iris)-self.trainSetSize, d+1))
+        for i in range(len(self.iris)-self.trainSetSize):
+            for j in range(d):
+                self.validationSet[i][j] = self.iris[i+self.trainSetSize, j]
+            self.validationSet[i][d] = self.iris[i+self.trainSetSize, -1]
 
-#4.2 b) Entrainement d'un classifieur de Bayes sur l'ensemble d'entrainement (d=2) et visualisation des résultats
-#classifieur = createClassifieurBayesGaussien(partialTrainSet)
-classifieur = classifieur_bayes.creerClassifieur(partialTrainSet, "gaussien", 3)
+        #4.2 a) Algorithme de classifieur de Bayes basé sur des densités paramétriques Gaussiennes diagonales
+        # Voir classifieur_bayes.py
 
-minX1 = min(iris[:, 0])
-maxX1 = max(iris[:, 0])
-minX2 = min(iris[:, 1])
-maxX2 = max(iris[:, 1])
+        #4.2 b) Entrainement d'un classifieur de Bayes sur l'ensemble d'entrainement...
+        self.classifieur = classifieur_bayes.creerClassifieur(self.trainSet, "gaussien", 3)
 
-x1Vals = np.linspace(minX1, maxX1)
-x2Vals = np.linspace(minX2, maxX2)
+    def getClassifieurBayesGaussienGraph(self):
+        #4.2 b) ... visualisation des résultats
+        minX1 = min(self.iris[:, 0])
+        maxX1 = max(self.iris[:, 0])
+        minX2 = min(self.iris[:, 1])
+        maxX2 = max(self.iris[:, 1])
 
-grille = []
-step = 0.05
-i = minX1
-while i < maxX1:
-    j = minX2
-    while j < maxX2:
-        grille.append([i, j])
-        j += step
-    i += step
-grille = np.array(grille)
+        x1Vals = np.linspace(minX1, maxX1)
+        x2Vals = np.linspace(minX2, maxX2)
 
-logProbabiliteGrille = classifieur.computePredictions(grille)
-classesPreditesGrille = logProbabiliteGrille.argmax(1)+1
+        grille = []
+        step = 0.05
+        i = minX1
+        while i < maxX1:
+            j = minX2
+            while j < maxX2:
+                grille.append([i, j])
+                j += step
+            i += step
+        grille = np.array(grille)
 
-pylab.scatter(grille[:, 0], grille[:, 1], s=50, c=classesPreditesGrille, alpha=0.25)
-pylab.scatter(partialTrainSet[:, 0], partialTrainSet[:, 1], c=iris[0:trainSetSize, -1], marker='v', s=100)
-pylab.scatter(partialValidationSet[:, 0], partialValidationSet[:, 1], c=iris[trainSetSize:, -1], marker='s', s=100)
+        logProbabiliteGrille = self.classifieur.computePredictions(grille)
+        classesPreditesGrille = logProbabiliteGrille.argmax(1)+1
 
-#4.2 c) Calcul des erreurs en dimension d = 2
-logProbabiliteTrain = classifieur.computePredictions(partialTrainSet[:, :-1])
-classesPreditesTrain = logProbabiliteTrain.argmax(1)+1
+        pylab.scatter(grille[:, 0], grille[:, 1], s=50, c=classesPreditesGrille, alpha=0.25)
+        pylab.scatter(self.trainSet[:, 0], self.trainSet[:, 1], c=self.iris[0:self.trainSetSize, -1], marker='v', s=100)
+        pylab.scatter(self.validationSet[:, 0], self.validationSet[:, 1], c=self.iris[self.trainSetSize:, -1], marker='s', s=100)
+        pylab.title("Regions de decision")
+        #pylab.show()
+        pylab.savefig('bayes_gaussienne.png')
+        pylab.close()
 
-logProbabiliteValidation = classifieur.computePredictions(partialValidationSet[:, :-1])
-classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
+    #4.2 c) d) Calcul des erreurs en dimension d
+    def printTauxErreur(self):
+        logProbabiliteTrain = self.classifieur.computePredictions(self.trainSet[:, :-1])
+        classesPreditesTrain = logProbabiliteTrain.argmax(1)+1
 
-tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation)
-classifieur_bayes.afficherTauxErreur(tauxErreur[0], tauxErreur[1], 2)
+        logProbabiliteValidation = self.classifieur.computePredictions(self.validationSet[:, :-1])
+        classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
 
-#4.2 d) Calcul des erreurs en dimension d = 4
-classifieur = classifieur_bayes.creerClassifieur(completeTrainSet, "gaussien", 3)
-logProbabiliteTrain = classifieur.computePredictions(completeTrainSet[:, :-1])
-classesPreditesTrain = logProbabiliteTrain.argmax(1)+1
-
-logProbabiliteValidation = classifieur.computePredictions(completeValidationSet[:, :-1])
-classesPreditesValidation = logProbabiliteValidation.argmax(1)+1
-
-tauxErreur = classifieur_bayes.calculateTauxErreur(iris, classesPreditesTrain, classesPreditesValidation)
-classifieur_bayes.afficherTauxErreur(tauxErreur[0], tauxErreur[1], 4)
-
-pylab.show()
-pylab.close()
+        tauxErreur = classifieur_bayes.calculateTauxErreur(self.iris, classesPreditesTrain, classesPreditesValidation)
+        classifieur_bayes.afficherTauxErreur(tauxErreur[0], tauxErreur[1], self.d)
