@@ -51,7 +51,6 @@ a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \
 
 b) Si on choisit de prendre tous les points du voisinages
 $ p(x) =  \frac{1}{n} \sum_{i=1}^{n} \mathcal{N}_{x^{(i)}, \sigma^{2}} $
-\todo{distribuer pour virer la somme?}
 
 c) Hyper-paramètre: $\sigma \in \mathds{R}$
 
@@ -62,8 +61,23 @@ On considère cette méthode comme non-paramétrique car le nombre de paramètre
 
 
 d)
-\todo{Le petit d}
-3 propriété a prouvé: integral, integral=1, toujours positive (ou presque)
+Cette densité de probabilité est toujours positive. En effet, l'ensemble de paramètre est positif et on les multiplie et additionne. 
+
+L'intégral étant compliqué à calculer. Nous avons testé qu'elle somme à de manière empirique en calculant 2000 p(x) different sur l'interval de -10 à 10.
+
+\begin{verbatim}
+def parzenEqualToOne(self):
+        sigma = 0.349
+        dg = densite_fonction.DensiteParzen(1, sigma)
+        dg.train(self.oneDimData)
+        input = [ i/100. for i in range(-1000,1000)]
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        n, bins, rectangles = ax.hist(input, 50, normed=True)
+        print("Resultat = " + str(numpy.sum(n * numpy.diff(bins))))
+\end{verbatim}
+
+Ce code donne $Resultat = 1.0$
 
 \subsection{Densité paramétrique avec Gaussienne isotropique}
 
@@ -142,12 +156,29 @@ $p(x) = \prod_{i=1}^{d} p(x^{i}) $
 La densité estimée pour à partir d'un vecteur aléatoire $x \in R$ qui suit une distribution gaussienne diagonale est égale au produit des densités estimées des composantes de ce vecteur aléatoire. On peut en conclure que ces composantes sont des variables aléatoires indépendantes.
 
 
-c) $\widehat{R} = \frac{1}{n} \sum_{i=1}^{n} -log (p(x^{i}))$
+c) $ J(\theta) =\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (p(x^{i}))$
 
-On cherche donc $\widehat{f}_{n}$ tel que $\widehat{f}_{n} = argmin_{f \in F} \widehat{R}(f,D)$
+On cherche donc $\theta^{*}$ tel que $\theta^{*} = argmin_{\theta} \widehat{R}(f,D)$
 
-d) \todo{gd d}
+$ \theta = ( \mu, \sigma )$
 
+d) On calcul le gradient $ \triangledown J(\theta) = $
+
+$\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) })$
+
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} - ( -log((2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid} ) + (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) )$
+
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\sqrt{\mid{\Sigma} \mid} ) - (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) $
+
+Pour une matrice diagonale, le déterminant vaut le produit des éléments sur la diagonale.
+
+$\sqrt{\mid{\Sigma} \mid} = \sqrt{ \prod_{k=1}^{d} \sigma^{2}_{k} } =   \prod_{k=1}^{d} \sqrt{\sigma^{2}_{k} } = \prod_{k=1}^{d} \sigma_{k} $ car $\sigma$ positif
+
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\prod_{k=1}^{d} \sigma_{k} ) - (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) $
+
+Dérivé partielle pour $\mu$
+
+$\frac{\partial J}{\partial \mu} = 0 + 0 + \frac{\partial }{\partial \mu} \sum_{i=1}^{n}  - (\frac{-1}{2n} (x- \mu)^{T} \Sigma^{-1} (x- \mu) )$ 
 
 \subsection{Choix du modèle}
 
@@ -213,7 +244,7 @@ avec $ \hat{p}_{c}(x) $ la densité de probabilité apprise (1.3 a) sur tout les
 
 a)
 
-$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) }{ \sum_{c'=1}^{m} \hat{p}_{c'} } $
 
 avec $ \hat{p}_{c}(x) =  \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{m}(Y_{i}) $
 
