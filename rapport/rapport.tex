@@ -180,6 +180,8 @@ Dérivé partielle pour $\mu$
 
 $\frac{\partial J}{\partial \mu} = 0 + 0 + \frac{\partial }{\partial \mu} \sum_{i=1}^{n}  - (\frac{-1}{2n} (x- \mu)^{T} \Sigma^{-1} (x- \mu) )$ 
 
+\todo{finir}
+
 \subsection{Choix du modèle}
 
 La première tâche à effectuer pour choisir le modèle le plus approprié est de sélectionner un ensemble de tous les modèles que nous pourrions effectuer. Ici, il s'agit des approches présentées aux sections 1.1, 1.2 et 1.3. Ensuite, pour chacun des modèles sélectionnées, on procède ainsi :
@@ -213,6 +215,13 @@ Pour la probabilité a priori.
 \end{itemize}
 
 b)
+Pour mu :
+$\sum_{j=1}^{d} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
+
+Pour sigma :
+ \todo{exprimer sigma}
+
+Pour la probabilité à priori c'est la proportion d'element de chaque classe, de dimension m.
 
 c)
 $P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
@@ -252,6 +261,7 @@ et avec $ K(x_{i}, x) = \frac{1}{ (2 \pi)^{d/2} \sigma^{d}}  e^{ \frac{-1}{2} \f
 
 
 b)
+\todo{le point b}
 
 \section{Implémentation}
 
