@@ -142,7 +142,9 @@ $p(x) = \prod_{i=1}^{d} p(x^{i}) $
 La densité estimée pour à partir d'un vecteur aléatoire $x \in R$ qui suit une distribution gaussienne diagonale est égale au produit des densités estimées des composantes de ce vecteur aléatoire. On peut en conclure que ces composantes sont des variables aléatoires indépendantes.
 
 
-c) \todo{gd c}
+c) $\widehat{R} = \frac{1}{n} \sum_{i=1}^{n} -log (p(x^{i}))$
+
+On cherche donc $\widehat{f}_{n}$ tel que $\widehat{f}_{n} = argmin_{f \in F} \widehat{R}(f,D)$
 
 d) \todo{gd d}
 
@@ -214,6 +216,8 @@ a)
 $P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
 
 avec $ \hat{p}_{c}(x) =  \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{m}(Y_{i}) $
+
+et avec $ K(x_{i}, x) = \frac{1}{ (2 \pi)^{d/2} \sigma^{d}}  e^{ \frac{-1}{2} \frac{d(x^{i},x)^{2}}{\sigma^{2}}} $ 
 
 
 b)
