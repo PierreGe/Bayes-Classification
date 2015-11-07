@@ -184,7 +184,7 @@ b)
 c)
 $P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
 
-$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{\hat{p}_{c'} \hat{P}_{c'} } $
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
 
 avec $ \hat{p}_{c}(x) $ la densité de probabilité apprise (1.2 a) sur tout les points de la classe c.
 
@@ -200,12 +200,21 @@ Pour la probabilité a priori.
 	\item La proportion d'element de chaque classe, de dimension m.
 \end{itemize}
 
-b)
+b) $P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
+
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
+
+avec $ \hat{p}_{c}(x) $ la densité de probabilité apprise (1.3 a) sur tout les points de la classe c.
 
 
 \subsection{Classifieur de Parzen obtenu avec des fenêtres de Parzen à noyau Gaussien isotropique}
 
 a)
+
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
+
+avec $ \hat{p}_{c}(x) =  \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{m}(Y_{i}) $
+
 
 b)
 
@@ -339,12 +348,27 @@ Meilleur valeur : $\sigma = 0.43$
 Meilleur valeur : $\sigma = 0.02$
 
 \subsubsection{Meilleur choix}
+Cette exécution avec cette division particulière montre que :
+\begin{itemize}
+	\item La classification en dimension 4 est meilleur que la classification en dimension 2,
+	\item La classification avec un noyau de Parzen donne le même résultat en dimension 4 et un meilleur en dimension 2,
+	\item En dimension 2, l'erreur de validation avec gaussienne diagonale est de 19.05 \% et de 14.29 \% pour Parzen,
+	\item En dimension 4, l'erreur de validation avec gaussienne diagonale et Parzen valent tous les deux 4.76 \%,
+	\item La meilleur valeur de $\sigma$ en dimension 4 est de 0.02,
+	\item La meilleur valeur de $\sigma$ en dimension 2 est de 0.43.
+\end{itemize}
+\vspace{5mm}
 
-Ce choix sera réalisé de manière empirique en testant plusieurs $seeds$ différents de manière a faire ressortir une "tendance général".
+On peut essayer de généraliser les résultats. Ce choix sera réalisé de manière empirique en testant plusieurs $seeds$ différents de manière a faire ressortir une "tendance général".
 
 Ces exécutions différentes semblent montrer que :
 \begin{itemize}
-	\item 
+	\item La classification en dimension 4 est meilleur que la classification en dimension 2,
+	\item La classification avec un noyau de Parzen semble donner de meilleurs résultats,
+	\item La valeur de sigma "optimal" varie grandement en fonction des données.
+	\item L'erreur de classification avec gaussienne diagonale semble varier entre 2 et 6 \% et entre 0 et 4 \% pour Parzen.
 \end{itemize}
+
+
 
 \end{document}
