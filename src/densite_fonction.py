@@ -1,4 +1,6 @@
-# coding=utf-8
+#-*- coding: utf-8 -*-
+# Mathieu Bouchard && Pierre Gerard
+
 import numpy
 import utilitaires
 

@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
+# Mathieu Bouchard && Pierre Gerard
+
 import numpy as np
 import matplotlib.pyplot as pyplot
 import matplotlib.patches as mpatches

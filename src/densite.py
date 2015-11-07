@@ -1,3 +1,6 @@
+#-*- coding: utf-8 -*-
+# Mathieu Bouchard && Pierre Gerard
+
 import numpy
 import matplotlib.pyplot as plt
 import densite_fonction

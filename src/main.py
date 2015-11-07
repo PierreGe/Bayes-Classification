@@ -1,4 +1,6 @@
 #-*- coding: utf-8 -*-
+# Mathieu Bouchard && Pierre Gerard
+
 import densite
 import classifieur_bayes_gauss
 import classifieur_bayes_parzen
@@ -15,6 +17,7 @@ def main():
     d2d.getParzenGraph(0.08)
     d2d.getParzenGraph(0.40)
     d2d.getParzenGraph(20)
+    print("Partie pratique : Classifieur de Bayes")
     print(" - Classifieur de Bayes basé sur des densités paramétriques Guassiennes diagonales")
     cbg = classifieur_bayes_gauss.ClassifieurBayesGaussien(2)
     cbg.getClassifieurBayesGaussienGraph()
