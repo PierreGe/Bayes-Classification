@@ -34,7 +34,7 @@ class ClassifieurBayesParzen:
 
     def getClassifieurBayesGaussienGraphs(self):
         #4.3 b) Entrainement d'un classifieur de Bayes sur l'ensemble d'entrainement visualisation des résultats
-        sigmas = [0.08, 0.5, 10]
+        sigmas = [0.01, 0.5, 10]
 
         for sigma in sigmas:
             args = {'sigma': sigma}
