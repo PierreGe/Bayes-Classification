@@ -58,6 +58,16 @@ class Densite1D:
         plt.close()
         print("[Created] file : " + fileTitle)
 
+    def parzenEqualToOne(self):
+        sigma = 0.349
+        dg = densite_fonction.DensiteParzen(1, sigma)
+        dg.train(self.oneDimData)
+        input = [ i/100. for i in range(-1000,1000)]
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        n, bins, rectangles = ax.hist(input, 50, normed=True)
+        print(numpy.sum(n * numpy.diff(bins)))
+
 
 class Densite2D:
     def __init__(self):
@@ -137,10 +147,11 @@ class Densite2D:
 
 if __name__ == '__main__':
     d1d = Densite1D()
-    d1d.getOneDimGraph()
+    #d1d.getOneDimGraph()
+    d1d.parzenEqualToOne()
 
-    d2d = Densite2D()
-    d2d.getParamDensityGraph()
-    d2d.getParzenGraph(0.08)
-    d2d.getParzenGraph(0.40)
-    d2d.getParzenGraph(4)
+    #d2d = Densite2D()
+    #d2d.getParamDensityGraph()
+    ##d2d.getParzenGraph(0.08)
+    ##d2d.getParzenGraph(0.40)
+    #d2d.getParzenGraph(4)

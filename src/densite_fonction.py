@@ -78,3 +78,4 @@ class DensiteParzen:
             res = numpy.log(self.p(test_data[i]))
             log_prob.append(res)
         return numpy.array(log_prob)
+

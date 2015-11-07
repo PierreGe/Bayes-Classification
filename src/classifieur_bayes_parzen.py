@@ -68,7 +68,9 @@ class ClassifieurBayesParzen:
             pyplot.scatter(self.validationSet[:, 0], self.validationSet[:, 1], c=self.iris[self.trainSetSize:, -1], marker='s', s=100)
             pyplot.title("Regions de decision (sigma = "+str(sigma)+")")
             #pylab.show()
-            pyplot.savefig('bayes_parzen_'+str(sigma)+'.png')
+            fileTitle = 'bayes_parzen_'+str(sigma)+'.png'
+            pyplot.savefig(fileTitle)
+            print("[Created] file : " + fileTitle)
             pyplot.close()
 
     def calculErreurs(self, sigmas):
@@ -103,7 +105,9 @@ class ClassifieurBayesParzen:
         red = mpatches.Patch(color="red", label="Erreur d'apprentissage")
         green = mpatches.Patch(color="green", label="Erreur de validation")
         pyplot.legend(handles=[red, green])
-        pyplot.savefig('bayes_parzen_'+str(self.d)+'d.png')
+        fileTitle = 'bayes_parzen_'+str(self.d)+'d.png'
+        pyplot.savefig(fileTitle)
+        print("[Created] file : " + fileTitle)
         #pyplot.show()
         pyplot.close()
 

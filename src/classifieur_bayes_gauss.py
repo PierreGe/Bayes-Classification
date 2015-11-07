@@ -68,7 +68,9 @@ class ClassifieurBayesGaussien:
         pylab.scatter(self.validationSet[:, 0], self.validationSet[:, 1], c=self.iris[self.trainSetSize:, -1], marker='s', s=100)
         pylab.title("Regions de decision")
         #pylab.show()
-        pylab.savefig('bayes_gaussienne.png')
+        fileTitle = 'bayes_gaussienne.png'
+        pylab.savefig(fileTitle)
+        print("[Created] file : " + fileTitle)
         pylab.close()
 
     #4.2 c) d) Calcul des erreurs en dimension d
