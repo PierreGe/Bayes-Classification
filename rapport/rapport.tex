@@ -233,6 +233,7 @@ Note : Les modules suivants utilisé en labo sont nécessaire : numpy, matplotli
 
 \subsection{Densité 2D}
 
+\subsubsection{Densité paramétrique gaussienne}
 \begin{figure}[H]
 	\includegraphics[width=12cm]{images/2D_Gaussian_border.png} 
 	\centering
@@ -240,6 +241,7 @@ Note : Les modules suivants utilisé en labo sont nécessaire : numpy, matplotli
 	\label{fig:comp}
 \end{figure}
 
+\subsubsection{Densité de Parzen : sigma trop petit}
 \begin{figure}[H]
 	\includegraphics[width=12cm]{images/2D_Parzen_sigma_petit.png} 
 	\centering
@@ -247,6 +249,7 @@ Note : Les modules suivants utilisé en labo sont nécessaire : numpy, matplotli
 	\label{fig:comp}
 \end{figure}
 
+\subsubsection{Densité de Parzen : sigma trop grand}
 \begin{figure}[H]
 	\includegraphics[width=12cm]{images/2D_Parzen_sigma_grand.png} 
 	\centering
@@ -254,13 +257,94 @@ Note : Les modules suivants utilisé en labo sont nécessaire : numpy, matplotli
 	\label{fig:comp}
 \end{figure}
 
+\subsubsection{Densité de Parzen : sigma adéquat}
 \begin{figure}[H]
 	\includegraphics[width=12cm]{images/2D_Parzen_sigma_ad.png} 
 	\centering
-	\caption{Densité de Parzen : sigma trop adéquat}
+	\caption{Densité de Parzen : sigma adéquat}
 	\label{fig:comp}
 \end{figure}
 
-\section{Partie Pratique : Estimation de densité}
+\section{Partie Pratique : Classifieur de Bayes}
+
+\subsection{Avec densités paramétriques gaussienne diagonales}
+
+\subsubsection{Graphique pour d=2}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_gaussienne.png} 
+	\centering
+	\caption{Graphique pour d=2}
+	\label{fig:comp}
+\end{figure}
+
+\subsubsection{Calcul d'erreur pour d=2}
+\begin{verbatim}
+d=2
+Taux d'erreur sur l'ensemble d'entrainement: 24.07%
+Taux d'erreur sur l'ensemble de validation: 19.05%	
+\end{verbatim}
+
+\subsubsection{Calcul d'erreur pour d=4}
+
+\begin{verbatim}
+d=4
+Taux d'erreur sur l'ensemble d'entrainement: 4.63%
+Taux d'erreur sur l'ensemble de validation: 4.76%
+\end{verbatim}
+
+\subsection{Avec densités de Parzen gaussienne isotropique}
+
+\subsubsection{Classifieur de Parzen : sigma trop petit}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_parzen_petit.png} 
+	\centering
+	\caption{Classifieur de Parzen : sigma trop petit}
+	\label{fig:comp}
+\end{figure}
+
+\subsubsection{Classifieur de Parzen : sigma trop grand}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_parzen_grand.png} 
+	\centering
+	\caption{Classifieur de Parzen : sigma trop grand}
+	\label{fig:comp}
+\end{figure}
+
+\subsubsection{Classifieur de Parzen : sigma adéquat}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_parzen_bon.png} 
+	\centering
+	\caption{Classifieur de Parzen : sigma adéquat}
+	\label{fig:comp}
+\end{figure}
+
+\subsubsection{Courbe d'apprentissage 2D}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_parzen_courbe_apprentissage_2d.png} 
+	\centering
+	\caption{Courbe d'apprentissage 2D}
+	\label{fig:comp}
+\end{figure}
+
+Meilleur valeur : $\sigma = 0.43$
+
+\subsubsection{Courbe d'apprentissage 4D}
+\begin{figure}[H]
+	\includegraphics[width=12cm]{images/bayes_parzen_courbe_apprentissage4D.png} 
+	\centering
+	\caption{Courbe d'apprentissage 4D}
+	\label{fig:comp}
+\end{figure}
+
+Meilleur valeur : $\sigma = 0.02$
+
+\subsubsection{Meilleur choix}
+
+Ce choix sera réalisé de manière empirique en testant plusieurs $seeds$ différents de manière a faire ressortir une "tendance général".
+
+Ces exécutions différentes semblent montrer que :
+\begin{itemize}
+	\item 
+\end{itemize}
 
 \end{document}
