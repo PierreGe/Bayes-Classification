@@ -265,7 +265,9 @@ Nous aurions également pu séparer $D$ en 3 sous-ensembles plutôt que 2 et ain
 
 \subsection{Classifieur de Bayes obtenu avec des densités paramétriques Gaussiennes diagonales}
 
-a)Pour la probabilité a postériori.
+a)
+
+Pour la probabilité a postériori.
 \begin{itemize}
 	\item $\mu$ est le est le vecteur des moyennes, de dimension d.
 	\item $\Sigma$ est la matrice de covariance, de dimension d.
@@ -276,6 +278,7 @@ Pour la probabilité a priori.
 \end{itemize}
 
 b)
+
 Pour $\mu$ :
 $\sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
 
@@ -286,6 +289,7 @@ $ {\sigma_j}^2 = 2 \sum_{i = 1}^{n}(2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j
 Pour la probabilité à priori c'est la proportion d'element de chaque classe, de dimension m.
 
 c)
+
 $P(Y=c | X=x)  = \frac{P(X=x | Y=c) P(Y=c)}{P(X=x)} $
 
 $P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
@@ -328,8 +332,9 @@ $P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) }{ \sum_{c'=1}^{m} \hat{p}_{c'} } =?  \fr
 
 $P(Y=c | X=x)  = \frac{ \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{c}(Y_{i}) }{ \sum_{c'=1}^{m} \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{c'}(Y_{i}) } =?  \frac{  \frac{1}{n} \sum_{i=1}^{n} K(x^{(i)}, \sigma^{2})  \hat{P}_{c}}{ \sum_{c'=1}^{m}  \frac{1}{n} \sum_{i=1}^{n} K(x^{(i)}, \sigma^{2})  \hat{P}_{c'} } $
 
-De manière intuitive, on remarque que à gauche de l'équation est la proportion de point pondéré par l'ensemble de tout les points pondérés d'une classe normalisé pour obtenir une valeur entre 0 et 1 et que à droite de l'équation c'est la somme des points pondéré multiplié par la proportion de point de cette classe normalisé pour obtenir une valeur entre 0 et 1. Ces deux égalités semblent montrés la même chose.
+De manière intuitive, on remarque que à gauche de l'équation c'est la proportion de point avec un poids dépendant de la distance par l'ensemble de toutes les distances pondérés pour une classe ( le tout normalisé pour obtenir une valeur entre 0 et 1). On remarque que à droite de l'équation c'est la somme des distances pondéré multiplié par la proportion de point de cette classe (le tout normalisé pour obtenir une valeur entre 0 et 1). Ces deux égalités semblent indiqué la même chose.
 
+Pour montré cela de façon rigoureuse, il faudrait trouver une preuve formelle.
 
 \section{Implémentation}
 
