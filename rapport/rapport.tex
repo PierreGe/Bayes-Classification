@@ -49,10 +49,12 @@ a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \
 
 
 
-b) Si on choisit de prendre tous les points du voisinages
+b) Si on choisit de prendre tous les points du voisinages, on obtient
 $ p(x) =  \frac{1}{n} \sum_{i=1}^{n} \mathcal{N}_{x^{(i)}, \sigma^{2}} $
 
-c) Hyper-paramètre: $\sigma \in \mathds{R}$
+c) 
+
+Hyper-paramètre: $\sigma \in \mathds{R}$
 
 Paramètre : On mémorise l'ensemble des données d'entrainement. $( n \times \mathds{R}^{d})$
 
@@ -63,7 +65,7 @@ On considère cette méthode comme non-paramétrique car le nombre de paramètre
 d)
 Cette densité de probabilité est toujours positive. En effet, l'ensemble de paramètre est positif et on les multiplie et additionne. 
 
-L'intégral étant compliqué à calculer. Nous avons testé qu'elle somme à de manière empirique en calculant 2000 p(x) different sur l'interval de -10 à 10.
+L'intégral étant compliqué à calculer. Nous avons testé qu'elle somme à 1 de manière empirique pour 2000 p(x) different sur l'interval de -10 à 10. Le code suivant calcul l'aire sous la courbe de la densité de probabilité (2000 rectangle).
 
 \begin{verbatim}
 def parzenEqualToOne(self):
@@ -78,16 +80,17 @@ def parzenEqualToOne(self):
 \end{verbatim}
 
 Ce code donne $Resultat = 1.0$
+L'intégral vaut bien 1.
 
 \subsection{Densité paramétrique avec Gaussienne isotropique}
 
 a) $p(x) = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{\frac{-\mid\mid x- \mu \mid\mid ^{2}}{2 \sigma^{2}} }$
 
-
-$\mu$ est le est le vecteur des moyennes, de dimension d.
-$\Sigma$ est la matrice de covariance, de dimension 1.
-
-
+Avec :
+\begin{itemize}
+	\item $\mu$, le est le vecteur des moyennes, de dimension d,
+	\item $\Sigma$, la matrice de covariance, de dimension 1.
+\end{itemize}
 
 b) Dans le cas de l'estimation par fenêtre de Parzen, il nous faut effectuer une moyenne sur n densités Gaussiennes et, pour chacune d'elles, le point x(i) sert de moyenne $\mathcal{N}_{x^{(i)}, \sigma^{2}}$ avec $\sigma$ qui est un hyperparamètre. Dans le cas présent, on utilise une seule densité Gaussienne pour laquelle il faudra apprendre les valeurs de moyenne $\mu$ et d'écart-type $\sigma$.
 
@@ -246,7 +249,7 @@ La première tâche à effectuer pour choisir le modèle le plus approprié est 
 
 \begin{enumerate}
 	\item Soit $A$ , le modèle courant.
-	\item Si le modèle contient des hyper-paramètres, répéter la procédure pour toutes les valeurs acceptables que ces hyper-paramètres peuvent prendre. Appelons cette configuration $\lambda$. Rappelons que l'approche des fenêtres de Parzen à noyau isotropique contient un hyper- paramètre (l'écart-type $\sigma$) tandis que les approches 2 et 3 n'en n'ont aucun ( $\lambda= \O$ ).
+	\item Si le modèle contient des hyper-paramètres, répéter la procédure pour toutes les valeurs acceptables que ces hyper-paramètres peuvent prendre. Appelons cette configuration $\lambda$. Rappelons que l'approche des fenêtres de Parzen à noyau isotropique contient un hyper-paramètre (l'écart-type $\sigma$) tandis que les approches 2 et 3 n'en n'ont aucun ( $\lambda= \O$ ).
 	\item Mélanger les éléments de l'ensemble $D$ s'ils étaient ordonnés.
 	\item Séparer l'ensemble d'entraînement $D$ en deux sous-ensembles $D_{train}$ et $D_{valid}$. L'ensemble d’entraînement devrait être plus grand que l'ensemble de validation. $x \in \mathds{R}$ qui suit une distribution Gaussienne
 	\item Entraîner $A$ avec la configuration d'hyper-paramètres choisis sur l'ensemble d'entraînement. On obtient alors : $\widehat{f} (A_{\lambda})=A_{\lambda}(D_{train})$
@@ -254,7 +257,7 @@ La première tâche à effectuer pour choisir le modèle le plus approprié est 
 \end{enumerate}
 
 Une fois que ce travail a été effectuer pour tous les algorithmes et, pour chacun, sur chaque configurations d'hyper-paramètres $\lambda$ jugés admissibles, on regarde les valeurs de $e_{(A_{\lambda})}$ obtenues. Le modèle $A_{\lambda}$ qui retourne une erreur de validation minimale $e*_{A_{\lambda}}$ sera alors sélectionner. 
-Nous aurions également pu séparer $D$ en 3 sous-ensembles plutôt que 2 et ainsi ajouter un ensemble de test. Une fois l'algorithme optimal trouvé à l'aide de l'ensemble d'entraînement et de l'ensemble de validation, nous aurions pu calculer un estimé non-biaisé de la performance de généralisation de l'algorithme choisit en calculant l'erreur empirique de validation sur l'ensemble de test; soit un ensemble de données dont le valeurs n'ont jamais été utilisées pour sélectionner l'algorithme dans les étapes précédantes. Cette étape nous permet de nous assurer (si nous avons assez de donner pour pouvoir effectuer un test concluent) que l'algorithme sélectionné est capable de généraliser sur de nouvelles données et qu'il n'est pas juste efficace sur les données de $D_{train}$ et $D_{valid}$.
+Nous aurions également pu séparer $D$ en 3 sous-ensembles plutôt que 2 et ainsi ajouter un ensemble de test. Une fois l'algorithme optimal trouvé à l'aide de l'ensemble d'entraînement et de l'ensemble de validation, nous aurions pu calculer un estimé non-biaisé de la performance de généralisation de l'algorithme choisit en calculant l'erreur empirique de validation sur l'ensemble de test; soit un ensemble de données dont le valeurs n'ont jamais été utilisées pour sélectionner l'algorithme dans les étapes précédentes. Cette étape nous permet de nous assurer (si nous avons assez de donner pour pouvoir effectuer un test concluent) que l'algorithme sélectionné est capable de généraliser sur de nouvelles données et qu'il n'est pas juste efficace sur les données de $D_{train}$ et $D_{valid}$.
 
 
 
