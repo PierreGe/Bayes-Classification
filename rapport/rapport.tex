@@ -45,7 +45,7 @@
 
 \subsection{Densité avec des fenêtres de Parzen a noyau Gaussien isotropique}
 
-a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \frac{-1}{2} \frac{d(x^{i},x)^{2}}{\sigma^{2}} } $
+a) $\mathcal{N}_{x^{(i)}, \sigma^{2}} = \frac{1}{(2 \pi)^{d/2} \sigma^{d}} e^{ \frac{-1}{2} \frac{d(x^{(i)},x)^{2}}{\sigma^{2}} } $
 
 
 
@@ -146,17 +146,17 @@ $p(x) = \mathcal{N}_{\mu , \Sigma(x)} = \frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma
 
 $p(x) = s \times e^{\frac{-1}{2} (\frac{k_{1}}{\sigma_{1}^{2}} \frac{k_{2}}{\sigma_{2}^{2}} ... \frac{k_{d}}{\sigma_{d}^{2}} )k }  = s \times e^{\frac{-1}{2} \sum_{i=1}^{d} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }$
 
-$p(x) = s \prod_{i=1}^{d} e^{\frac{-1}{2} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }  = s \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{i} - \mu)^{T} \Sigma^{-1} (x^{i} - \mu) } $ où $x^{i}$ est un vecteur de taille $d$ avec la $i^{eme}$ valeur de $x$ en position $i$ et des 0 partout ailleurs.
+$p(x) = s \prod_{i=1}^{d} e^{\frac{-1}{2} \frac{k_{i}^{2} }{\sigma_{i}^{2}} }  = s \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{(i)} - \mu)^{T} \Sigma^{-1} (x^{(i)} - \mu) } $ où $x^{(i)}$ est un vecteur de taille $d$ avec la $i^{eme}$ valeur de $x$ en position $i$ et des 0 partout ailleurs.
 
-$p(x) =\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{i} - \mu)^{T} \Sigma^{-1} (x^{i} - \mu) }  $
+$p(x) =\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} \prod_{i=1}^{d} e^{\frac{-1}{2} (x^{(i)} - \mu)^{T} \Sigma^{-1} (x^{(i)} - \mu) }  $
 
-$p(x) = \prod_{i=1}^{d} p(x^{i}) $
+$p(x) = \prod_{i=1}^{d} p(x^{(i)}) $
 
 
 La densité estimée pour à partir d'un vecteur aléatoire $x \in R$ qui suit une distribution gaussienne diagonale est égale au produit des densités estimées des composantes de ce vecteur aléatoire. On peut en conclure que ces composantes sont des variables aléatoires indépendantes.
 
 
-c) $ J(\theta) =\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (p(x^{i}))$
+c) $ J(\theta) =\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (p(x^{(i)}))$
 
 On cherche donc $\theta^{*}$ tel que $\theta^{*} = argmin_{\theta} \widehat{R}(f,D)$
 
@@ -164,41 +164,82 @@ $ \theta = ( \mu, \sigma )$
 
 d) On calcul le gradient $ \triangledown J(\theta) = $
 
-$\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) })$
+$\widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} -log (\frac{1}{(2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid}} e^{\frac{-1}{2} (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu) })$
 
-$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} - ( -log((2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid} ) + (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) )$
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} - ( -log((2 \pi)^{d/2} \sqrt{\mid{\Sigma} \mid} ) + (\frac{1}{2} (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu) ) )$
 
-$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\sqrt{\mid{\Sigma} \mid} ) - (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) $
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\sqrt{\mid{\Sigma} \mid} ) - (\frac{1}{2} (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu) ) $
 
 Pour une matrice diagonale, le déterminant vaut le produit des éléments sur la diagonale.
 
 $\sqrt{\mid{\Sigma} \mid} = \sqrt{ \prod_{k=1}^{d} \sigma^{2}_{k} } =   \prod_{k=1}^{d} \sqrt{\sigma^{2}_{k} } = \prod_{k=1}^{d} \sigma_{k} $ car $\sigma$ positif
 
-$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\prod_{k=1}^{d} \sigma_{k} ) - (\frac{-1}{2} (x- \mu)^{T} \Sigma^{-1} (x- \mu) ) $
+$ \widehat{R}(f,D) = \frac{1}{n} \sum_{i=1}^{n} log((2 \pi)^{d/2} )+log(\prod_{k=1}^{d} \sigma_{k} ) - (\frac{1}{2} (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu) ) $
 
-Dérivé partielle pour $\mu$
+Dérivée partielle pour $\mu$
 
-$\frac{\partial J}{\partial \mu} = 0 + 0 + \frac{\partial }{\partial \mu} \sum_{i=1}^{n}  - (\frac{-1}{2n} (x- \mu)^{T} \Sigma^{-1} (x- \mu) )$ 
+$\frac{\partial J}{\partial \mu} = 0 + 0 + \frac{\partial }{\partial \mu} \sum_{i=1}^{n}  - (\frac{1}{2n} (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu) )$ 
 
-$\frac{\partial J}{\partial \mu} = \frac{\partial }{\partial \mu} \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d}\frac{\mu_{j}^{2}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{2\mu_{j}x_{j}^{i}}{\sigma_{j}^{2}})$ 
+$\frac{\partial J}{\partial \mu}=\frac{\partial }{\partial \mu} \frac{1}{2n} \sum_{i=1}^{n} (x^{(i)T} \Sigma^{-1} x^{(i)} - x^{(i)T} \Sigma^{-1} \mu - \mu^{T}\Sigma^{-1} x^{(i)} + \mu^{T}\Sigma^{-1}\mu)$
 
-$\frac{\partial J}{\partial \mu} =  \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{\partial }{\partial \mu} \frac{\mu_{j}^{2}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{\partial }{\partial \mu} \frac{2\mu_{j}x_{j}^{i}}{\sigma_{j}^{2}})$ 
+$\frac{\partial J}{\partial \mu}=\frac{\partial }{\partial \mu} \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{{\mu_j}^2}{{\sigma_j}^2} - \sum_{j=1}^{d} \frac{2 \mu_j {x_j}^{(i)} }{{\sigma_j}^2})$
 
-$\frac{\partial J}{\partial \mu} =  \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d}\frac{2 \mu_{j}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{2x_{j}^{i}}{\sigma_{j}^{2}})$ 
+$\frac{\partial J}{\partial \mu}=\frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{\partial } {\partial \mu_j} \frac{{\mu_j}^2}{{\sigma_j}^2} - \sum_{j=1}^{d} \frac{\partial }{\partial \mu_j} \frac{2 \mu_j {x_j}^{(i)} }{{\sigma_j}^2})$
 
+$\frac{\partial J}{\partial \mu}=\frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{2{\mu_j}}{{\sigma_j}^2} - \sum_{j=1}^{d} \frac{2 {x_j}^{(i)} }{{\sigma_j}^2})$
 
-$\frac{\partial J}{\partial \mu} =  \frac{1}{2n \sum_{j=1}^{d} \sigma_{j}{2}} \sum_{i=1}^{n} (\sum_{j=1}^{d}2 \mu_{j} - \sum_{j=1}^{d} 2x_{j}^{i})$ 
+$\frac{\partial J}{\partial \mu}=\frac{1}{2n \sum_{j=1}^{d} {\sigma_j}^2} \sum_{i=1}^{n} (\sum_{j=1}^{d} 2{\mu_j} - \sum_{j=1}^{d} 2 {x_j}^{(i)})$
 
+On cherche la valeur de $\mu$ pour laquelle la dérivée partielle est nulle.
 
-En posant $\frac{\partial J}{\partial \mu} = 0$
+$\frac{1}{2n \sum_{j=1}^{d} {\sigma_j}^2} \sum_{i=1}^{n} (\sum_{j=1}^{d} 2{\mu_j} - \sum_{j=1}^{d} 2 {x_j}^{(i)}) = 0$
 
-$\sum_{i=1}^{d}\sum_{j=1}^{d} \mu_{j} = \frac{1}{2n \sum_{j=1}^{d} \sigma_{j}{2}} \sum_{i=1}^{n}\sum_{j=1}^{d} x_{j}^{i}$
+$\frac{2}{2n \sum_{j=1}^{d} {\sigma_j}^2} \sum_{i=1}^{n} \sum_{j=1}^{d} {\mu_j} = \frac{2}{n \sum_{j=1}^{d} {\sigma_j}^2} \sum_{i=1}^{n} \sum_{j=1}^{d}  {x_j}^{(i)}$
 
-$ n \sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} x_{j}^{i}$
+$\mu$ ne dépend pas de $i$. On peut alors le sortir de la première somme.
 
-$\sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
+$n \sum_{j=1}^{d} {\mu_j} = \sum_{i=1}^{n} \sum_{j=1}^{d}  {x_j}^{(i)}$
 
-\todo{finir pour sigma}
+$\sum_{j=1}^{d} {\mu_j} = \frac{1}{n} \sum_{i=1}^{n} \sum_{j=1}^{d}  {x_j}^{(i)}$
+
+Pour obtenir un paramètre $\mu$ optimal, il nous faut trouver un tel vecteur qui respect cette dernière équation. On trouve alors:
+
+${\mu}^* = \frac{1}{n} \sum_{i=1}^{n} {x}^{(i)}$
+
+$ {} $
+
+Dérivée partielle pour $\Sigma$
+
+$\frac{\partial J}{\partial \Sigma} = \frac{1}{n} \frac{\partial }{\partial \Sigma}(0 + \sum_{i=1}^{n} \log (\prod_{k = 1}^{d} \sigma_k) - \sum_{i=1}^{n} \frac{ (x^{(i)}- \mu)^{T} \Sigma^{-1} (x^{(i)}- \mu)}{2})$
+
+$\frac{\partial J}{\partial \Sigma} = \frac{1}{n} (\sum_{i=1}^{n}  \sum_{j=1}^{d} \frac{\partial }{\partial \sigma_j} \log (\sigma_j) - \frac{\partial }{\partial \Sigma} \sum_{i=1}^{n} \frac{ (x^{(i)T} \Sigma^{-1} x^{(i)} - x^{(i)T} \Sigma^{-1} \mu - \mu^{T}\Sigma^{-1} x^{(i)} + \mu^{T}\Sigma^{-1}\mu)}{2})$
+
+Calculons la dérivée partielle du second terme:
+
+$\frac{\partial }{\partial \Sigma} \sum_{i=1}^{n} \frac{ (x^{(i)T} \Sigma^{-1} x^{(i)} - x^{(i)T} \Sigma^{-1} \mu - \mu^{T}\Sigma^{-1} x^{(i)} + \mu^{T}\Sigma^{-1}\mu)}{2} = \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{\partial }{\partial \sigma_j} \frac {x^{(i)2}}{{\sigma_j}^2} - \sum_{j=1}^{d} \frac{\partial }{\partial \sigma_j} \frac {2 {x_j}^{(i)} \mu_j}{{\sigma_j}^2} + \sum_{j=1}^{d} \frac{\partial }{\partial \sigma_j} \frac{{\mu_j}^2}{{\sigma_j}^2})$
+
+$ {} = \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac {-2x^{(i)2}}{{\sigma_j}^3} + \sum_{j=1}^{d} \frac {4 {x_j}^{(i)} \mu_j}{{\sigma_j}^3} - \sum_{j=1}^{d} \frac{2{\mu_j}^2}{{\sigma_j}^3})$
+
+$ {} = (n \sum_{j=1}^{d} \frac{2 \sigma_j}{{\sigma_j}^4}) (\sum_{i=1}^{n} \sum_{j=1}^{d} 2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2)$
+
+Nous obtenons alors:
+
+$\frac{\partial }{\partial \sigma_j} = \frac {1}{n} (n \sum_{j = 1}^{d} \frac{1}{\sigma_j} - (n \sum_{j=1}^{d} \frac{2 \sigma_j}{{\sigma_j}^4}) (\sum_{i=1}^{n} \sum_{j=1}^{d} 2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2))$
+
+On cherche la valeur de $\Sigma$ pour laquelle la dérivée partielle est nulle.
+
+$(n \sum_{j=1}^{d} \frac{2 \sigma_j}{{\sigma_j}^4}) (\sum_{i=1}^{n} \sum_{j=1}^{d} 2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2) = 0$
+
+$ \sum_{j = 1}^{d} \frac{1}{\sigma_j}=  (\sum_{j=1}^{d} \frac{2 \sigma_j}{{\sigma_j}^4}) ( \sum_{i=1}^{n} \sum_{j=1}^{d} (2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2) )$
+
+$ \sum_{j = 1}^{d} \sigma^2 = 2 \sum_{i = 1}^{n} \sum_{j = 1}^{d} (2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2)$
+
+$tr(\Sigma) = 2 \sum_{i = 1}^{n} (x^{(i)} - \mu)^{T}(-x^{(i)}+\mu)$
+
+Les valeurs de la diagonale de $\Sigma^*$ sont alors calculées de la façon suivante:
+
+$ {\sigma_j}^2 = 2 \sum_{i = 1}^{n}(2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2)$ en utilisant les valeurs de $\mu^*$ calculées à l'étape précédante.
+>>>>>>> f68777f3f120e02a1ba75c7b4e8234d5a6d7f0de
 
 \subsection{Choix du modèle}
 
@@ -233,11 +274,12 @@ Pour la probabilité a priori.
 \end{itemize}
 
 b)
-Pour mu :
+Pour $\mu$ :
 $\sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
 
-Pour sigma :
- \todo{exprimer sigma}
+Pour $\Sigma$, on calcule les éléments de sa diagonale de la façon suivante:
+
+$ {\sigma_j}^2 = 2 \sum_{i = 1}^{n}(2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2)$
 
 Pour la probabilité à priori c'est la proportion d'element de chaque classe, de dimension m.
 
