@@ -180,7 +180,25 @@ Dérivé partielle pour $\mu$
 
 $\frac{\partial J}{\partial \mu} = 0 + 0 + \frac{\partial }{\partial \mu} \sum_{i=1}^{n}  - (\frac{-1}{2n} (x- \mu)^{T} \Sigma^{-1} (x- \mu) )$ 
 
-\todo{finir}
+$\frac{\partial J}{\partial \mu} = \frac{\partial }{\partial \mu} \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d}\frac{\mu_{j}^{2}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{2\mu_{j}x_{j}^{i}}{\sigma_{j}^{2}})$ 
+
+$\frac{\partial J}{\partial \mu} =  \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d} \frac{\partial }{\partial \mu} \frac{\mu_{j}^{2}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{\partial }{\partial \mu} \frac{2\mu_{j}x_{j}^{i}}{\sigma_{j}^{2}})$ 
+
+$\frac{\partial J}{\partial \mu} =  \frac{1}{2n} \sum_{i=1}^{n} (\sum_{j=1}^{d}\frac{2 \mu_{j}}{\sigma_{j}^{2}} - \sum_{j=1}^{d} \frac{2x_{j}^{i}}{\sigma_{j}^{2}})$ 
+
+
+$\frac{\partial J}{\partial \mu} =  \frac{1}{2n \sum_{j=1}^{d} \sigma_{j}{2}} \sum_{i=1}^{n} (\sum_{j=1}^{d}2 \mu_{j} - \sum_{j=1}^{d} 2x_{j}^{i})$ 
+
+
+En posant $\frac{\partial J}{\partial \mu} = 0$
+
+$\sum_{i=1}^{d}\sum_{j=1}^{d} \mu_{j} = \frac{1}{2n \sum_{j=1}^{d} \sigma_{j}{2}} \sum_{i=1}^{n}\sum_{j=1}^{d} x_{j}^{i}$
+
+$ n \sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} x_{j}^{i}$
+
+$\sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
+
+\todo{finir pour sigma}
 
 \subsection{Choix du modèle}
 
@@ -216,7 +234,7 @@ Pour la probabilité a priori.
 
 b)
 Pour mu :
-$\sum_{j=1}^{d} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
+$\sum_{j=1}^{d} \mu_{j} = \sum_{i=1}^{n}\sum_{j=1}^{d} \frac{x_{j}^{i}}{n}$
 
 Pour sigma :
  \todo{exprimer sigma}
