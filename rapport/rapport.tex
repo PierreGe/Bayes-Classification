@@ -239,7 +239,6 @@ $tr(\Sigma) = 2 \sum_{i = 1}^{n} (x^{(i)} - \mu)^{T}(-x^{(i)}+\mu)$
 Les valeurs de la diagonale de $\Sigma^*$ sont alors calculées de la façon suivante:
 
 $ {\sigma_j}^2 = 2 \sum_{i = 1}^{n}(2 {x_j}^{(i)}  \mu_j - {x_j}^{(i)2} - {\mu_j}^2)$ en utilisant les valeurs de $\mu^*$ calculées à l'étape précédante.
->>>>>>> f68777f3f120e02a1ba75c7b4e8234d5a6d7f0de
 
 \subsection{Choix du modèle}
 
@@ -315,13 +314,19 @@ a)
 
 $P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) }{ \sum_{c'=1}^{m} \hat{p}_{c'} } $
 
-avec $ \hat{p}_{c}(x) =  \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{m}(Y_{i}) $
+avec $ \hat{p}_{c}(x) =  \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{c}(Y_{i}) $
 
 et avec $ K(x_{i}, x) = \frac{1}{ (2 \pi)^{d/2} \sigma^{d}}  e^{ \frac{-1}{2} \frac{d(x^{i},x)^{2}}{\sigma^{2}}} $ 
 
 
 b)
-\todo{le point b}
+
+$P(Y=c | X=x)  = \frac{ \hat{p}_{c}(x) }{ \sum_{c'=1}^{m} \hat{p}_{c'} } =?  \frac{ \hat{p}_{c}(x) \hat{P}_{c}}{ \sum_{c'=1}^{m} \hat{p}_{c'} \hat{P}_{c'} } $
+
+$P(Y=c | X=x)  = \frac{ \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{c}(Y_{i}) }{ \sum_{c'=1}^{m} \frac{1}{ \sum_{i=1}^{n} K(x_{i}, x) } \sum_{i=1}^{n} K(x_{i}, x) onehot_{c'}(Y_{i}) } =?  \frac{  \frac{1}{n} \sum_{i=1}^{n} K(x^{(i)}, \sigma^{2})  \hat{P}_{c}}{ \sum_{c'=1}^{m}  \frac{1}{n} \sum_{i=1}^{n} K(x^{(i)}, \sigma^{2})  \hat{P}_{c'} } $
+
+De manière intuitive, on remarque que à gauche de l'équation est la proportion de point pondéré par l'ensemble de tout les points pondérés d'une classe normalisé pour obtenir une valeur entre 0 et 1 et que à droite de l'équation c'est la somme des points pondéré multiplié par la proportion de point de cette classe normalisé pour obtenir une valeur entre 0 et 1. Ces deux égalités semblent montrés la même chose.
+
 
 \section{Implémentation}
 
